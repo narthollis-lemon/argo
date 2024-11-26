@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: argocd
+
+# additional resources like ingress rules, cluster and repository secrets.
+resources:
+  - resources/argocd.namespace.yaml
+  - https://raw.githubusercontent.com/argoproj/argo-cd/v2.13.1/manifests/install.yaml
+  #- github.com/argoproj/argo-cd/manifests/cluster-install?ref=v2.13.1
+  - resources/argocd.application.yaml # bootstrap apps should self manage
+  - resources/argocd-view.clusterrole.yaml # setup some cluster roles tagged for aggregation into default bindings
+
+configMapGenerator:
+  - name: argocd-cm
+    behavior: merge
+    literals:
+      - timeout.reconciliation=15s
+      - application.resourceTrackingMethod=annotation
+      #- admin.enabled=false
+      - statusbadge.enabled=true
+      - users.anonymous.enabled=true
+      #- url: https://argo.moya.lemon.narthollis.net
