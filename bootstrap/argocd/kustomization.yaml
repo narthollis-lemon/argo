@@ -6,9 +6,8 @@ namespace: argocd
 # additional resources like ingress rules, cluster and repository secrets.
 resources:
   - resources/argocd.namespace.yaml
-  - https://raw.githubusercontent.com/argoproj/argo-cd/v2.13.1/manifests/install.yaml
-  #- github.com/argoproj/argo-cd/manifests/cluster-install?ref=v2.13.1
-  - resources/argocd.application.yaml # bootstrap apps should self manage
+  - github.com/argoproj/argo-cd/manifests/cluster-install?ref=v2.13.1
+  - resources/argocd.application.yaml # bootstrap apps should self manage1
   - resources/argocd-view.clusterrole.yaml # setup some cluster roles tagged for aggregation into default bindings
 
 configMapGenerator:
