@@ -45,6 +45,10 @@ spec:
         server: "{{ .values.server }}"
         namespace: "{{ .metadata.namespace }}"
       syncPolicy:
+        automated:
+          prune: false
+          selfHeal: true
+          allowEmpty: false
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
@@ -61,7 +65,7 @@ spec:
         helm:
           {{ .spec.helm | toYaml | indent 6 }}
         {{- end }}
-        {{- if (hasKey .spec "kustomize") }}
+        {{- if (hasKey .spec "kustomize")  }}
         kustomize:
           {{ .spec.kustomize | toYaml | indent 6 }}
         {{- end }}
