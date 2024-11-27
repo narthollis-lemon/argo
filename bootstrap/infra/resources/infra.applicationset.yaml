@@ -20,6 +20,9 @@ spec:
               revision: HEAD
               files:
                 - path: 'infra/**/configs/{{ .name }}.yaml'
+              values:
+                cluster: '{{ .name }}'
+                server: '{{ .server }}'
       selector:
         matchExpressions:
           - key: apiVersion
@@ -32,14 +35,14 @@ spec:
               - ArgoApplication
   template:
     metadata:
-      name: '{{ (printf "%s-%s" .name (.metadata.name | default (index .path.segments 1))) | normalize }}'
+      name: '{{ (printf "%s-%s" .values.cluster (dig "name" (index .path.segments 1) .metadata)) | normalize }}'
     spec:
       project: infra
       source:
         repoURL: '{{ .spec.repoURL | default "https://github.com/narthollis-lemon/argo.git" }}'
         targetRevision: '{{ .spec.targetRevision | default "HEAD" }}'
       destination:
-        server: "{{ .server }}"
+        server: "{{ .values.server }}"
         namespace: "{{ .metadata.namespace }}"
       syncPolicy:
         syncOptions:
