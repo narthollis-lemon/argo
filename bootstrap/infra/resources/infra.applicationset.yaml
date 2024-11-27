@@ -54,14 +54,14 @@ spec:
   templatePatch: |
     spec:
       source:
-        {{- if not .spec.repoURL }}
+        {{- if (not (hasKey .spec "repoURL")) }}
         path: "{{ index .path.segments 0 }}/{{ index .path.segments 1 }}"
         {{- end }}
-        {{- if .spec.helm }}
+        {{- if (hasKey .spec "helm") }}
         helm:
           {{ .spec.helm | toYaml | indent 6 }}
         {{- end }}
-        {{- if .spec.kustomize }}
+        {{- if (hasKey .spec "kustomize") }}
         kustomize:
           {{ .spec.kustomize | toYaml | indent 6 }}
         {{- end }}
