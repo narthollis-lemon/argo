@@ -20,10 +20,16 @@ spec:
               revision: HEAD
               files:
                 - path: 'infra/**/configs/{{ .name }}.yaml'
-            selector:
-              matchLabels:
-                apiVersion: narthollis.net/v1alpha1
-                kind: ArgoApplication
+      selector:
+        matchExpressions:
+          - key: apiVersion
+            operator: In
+            values:
+              - narthollis.net/v1alpha1
+          - key: kind
+            operator: In
+            values:
+              - ArgoApplication
   template:
     metadata:
       name: '{{ (printf "%s-%s" .name (.metadata.name | default (index .path.segments 1))) | normalize }}'
