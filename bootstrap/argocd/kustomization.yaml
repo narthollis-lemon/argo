@@ -9,6 +9,7 @@ resources:
   - github.com/argoproj/argo-cd/manifests/cluster-install?ref=v2.13.1
   - resources/argocd.application.yaml # bootstrap apps should self manage1
   - resources/argocd-view.clusterrole.yaml # setup some cluster roles tagged for aggregation into default bindings
+  - resources/moya-cluster.secret.yaml
 
 configMapGenerator:
   - name: argocd-cm
