@@ -20,9 +20,6 @@ spec:
               revision: HEAD
               files:
                 - path: 'infra/**/configs/{{ .name }}.yaml'
-              values:
-                app_name: "{{'{{ index .path.segments 1 }}'}}"
-                app_dir: "{{'{{ index .path.segments 0 }}/{{ index .path.segments 1 }}'}}"
       selector:
         matchExpressions:
           - key: apiVersion
@@ -35,7 +32,7 @@ spec:
               - ArgoApplication
   template:
     metadata:
-      name: '{{ (printf "%s-%s" .name (.metadata.name | default .values.app_name)) | normalize }}'
+      name: '{{ (printf "%s-%s" .name (.metadata.name | default (index .path.segments 1))) | normalize }}'
     spec:
       project: infra
       source:
@@ -55,7 +52,7 @@ spec:
     spec:
       source:
         {{- if not .spec.repoURL }}
-        path: "{{ .values.app_dir }}"
+        path: "{{ index .path.segments 0 }}/{{ index .path.segments 1 }}"
         {{- end }}
         {{- if .spec.helm }}
         helm:
