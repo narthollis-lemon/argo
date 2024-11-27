@@ -21,3 +21,5 @@ configMapGenerator:
       - statusbadge.enabled=true
       - users.anonymous.enabled=true
       #- url: https://argo.moya.lemon.narthollis.net
+    files:
+      - resource.exclusions=config/resource.exclusions.yaml

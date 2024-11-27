@@ -1,0 +1,8 @@
+apiVersion: narthollis.net/v1alpha1
+kind: ArgoApplication
+metadata:
+  namespace: cert-manager
+spec:
+  source:
+    helm: {}
+  
