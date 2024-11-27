@@ -11,6 +11,12 @@ spec:
   description: Cluster Infrastrucutre
   sourceRepos:
     - '*'
+  destinations:
+    - server: '*'
+      namespace: '*'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
   orphanedResources:
     warn: false
   roles:
