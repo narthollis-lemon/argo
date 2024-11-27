@@ -1,7 +1,7 @@
 apiVersion: narthollis.net/v1alpha1
 kind: ArgoApplication
 metadata:
-  namespace: cert-manager
+  namespace: kube-system
 spec:
   source:
     helm: {}
