@@ -1,0 +1,70 @@
+# yaml-language-server: $schema=../../../argo.schema.json
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/name: infra
+  name: infra
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions:
+    - missingkey=error
+  generators:
+    - matrix:
+        generators:
+          - clusters: {}
+          - git:
+              repoURL: https://github.com/narthollis-lemon/argo.git
+              revision: HEAD
+              files:
+                - path: infra/**/configs/{{ .name }}.yaml
+              values:
+                app_name: "{{ index .path.segments 1 }}"
+                app_dir: "{{ index .path.segments 0 }}/{{ index .path.segments 1 }}"
+      selector:
+        matchExpressions:
+          - key: apiVersion
+            operator: In
+            values:
+              - narthollis.net/v1alpha1
+          - key: kind
+            operator: In
+            values:
+              - ArgoApplication
+  template:
+    metadata:
+      name: '{{ (printf "%s-%s" .name (.metadata.name | default .values.app_name)) | normalize }}'
+    spec:
+      project: infra
+      source:
+        repoURL: '{{ .spec.repoURL | default "https://github.com/narthollis-lemon/argo.git" }}'
+        targetRevision: '{{ .spec.targetRevision | default "HEAD" }}'
+      destination:
+        server: "{{ .server }}"
+        namespace: "{{ .metadata.namespace }}"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        managedNamespaceMetadata:
+          labels:
+            app.kubernetes.io/managed-by: argocd
+  templatePatch: |
+    spec:
+      source:
+        {{- if not .spec.repoURL }}
+        path: "{{ .app_dir }}"
+        {{- end }}
+        {{- if .spec.helm }}
+        helm:
+          {{ .spec.helm | toYaml | indent 6 }}
+        {{- end }}
+        {{- if .spec.kustomize }}
+        kustomize:
+          {{ .spec.kustomize | toYaml | indent 6 }}
+        {{- end }}
+  syncPolicy:
+    applicationsSync: sync
+  

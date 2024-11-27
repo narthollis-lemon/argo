@@ -5,7 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/managed-by: argocd
     app.kubernetes.io/name: argocd
-  name: argocd
+  name: infra
   namespace: argocd
 spec:
   destination:
@@ -13,7 +13,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: bootstrap/argocd
+    path: bootstrap/infra
     repoURL: https://github.com/narthollis-lemon/argo.git
   syncPolicy:
     automated:

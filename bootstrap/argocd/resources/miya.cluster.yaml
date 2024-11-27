@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: miya
+  labels:
+    argocd.argoproj.io/secret-type: cluster
+stringData:
+  name: "miya"
+  server: https://kubernetes.default.svc
+  config: |
+    {
+      "tlsClientConfig": {
+        "insecure": false
+      }
+    }
