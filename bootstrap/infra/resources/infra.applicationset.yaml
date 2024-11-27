@@ -39,8 +39,8 @@ spec:
     spec:
       project: infra
       source:
-        repoURL: '{{ .spec.repoURL | default "https://github.com/narthollis-lemon/argo.git" }}'
-        targetRevision: '{{ .spec.targetRevision | default "HEAD" }}'
+        repoURL: '{{ dig "repoURL" "https://github.com/narthollis-lemon/argo.git" .spec }}'
+        targetRevision: '{{ dig "targetRevision" "HEAD" .spec }}'
       destination:
         server: "{{ .values.server }}"
         namespace: "{{ .metadata.namespace }}"
