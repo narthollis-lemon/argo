@@ -21,8 +21,8 @@ spec:
               files:
                 - path: 'infra/**/configs/{{ .name }}.yaml'
               values:
-                app_name: '{{ index .path.segments 1 }}'
-                app_dir: '{{ index .path.segments 0 }}/{{ index .path.segments 1 }}'
+                app_name: "{{'{{ index .path.segments 1 }}'}}"
+                app_dir: "{{'{{ index .path.segments 0 }}/{{ index .path.segments 1 }}'}}"
       selector:
         matchExpressions:
           - key: apiVersion
