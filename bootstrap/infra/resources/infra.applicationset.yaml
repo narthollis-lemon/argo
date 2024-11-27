@@ -19,10 +19,10 @@ spec:
               repoURL: https://github.com/narthollis-lemon/argo.git
               revision: HEAD
               files:
-                - path: infra/**/configs/{{ .name }}.yaml
+                - path: 'infra/**/configs/{{ .name }}.yaml'
               values:
-                app_name: "{{ index .path.segments 1 }}"
-                app_dir: "{{ index .path.segments 0 }}/{{ index .path.segments 1 }}"
+                app_name: '{{ index .path.segments 1 }}'
+                app_dir: '{{ index .path.segments 0 }}/{{ index .path.segments 1 }}'
       selector:
         matchExpressions:
           - key: apiVersion
@@ -55,7 +55,7 @@ spec:
     spec:
       source:
         {{- if not .spec.repoURL }}
-        path: "{{ .app_dir }}"
+        path: "{{ .values.app_dir }}"
         {{- end }}
         {{- if .spec.helm }}
         helm:
@@ -67,4 +67,4 @@ spec:
         {{- end }}
   syncPolicy:
     applicationsSync: sync
-  
+  applyNestedSelectors: true
