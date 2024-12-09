@@ -1,10 +1,18 @@
 cilium:
   fullnameOverride: cilium
 
-  enable-ipv4: true
-  enable-ipv6: true
-  enable-ipv4-masquerade: true
-  enable-ipv6-masquerade: true
+  ipv4:
+    enabled: true
+
+  ipv6:
+    enabled: true
+
+  enableIPv4Masquerade: true
+  enableIPv6Masquerade: true
+
+  k8s:
+    requireIPv4PodCIDR: true
+    requireIPv6PodCIDR: true
 
   kubeProxyReplacement: true
   k8sServiceHost: localhost
