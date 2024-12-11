@@ -9,6 +9,11 @@ cilium:
 
   enableIPv4Masquerade: true
   enableIPv6Masquerade: true
+  bpf:
+    masquerade: true
+
+  ipam:
+    mode: kubernetes
 
   k8s:
     requireIPv4PodCIDR: true
@@ -18,6 +23,9 @@ cilium:
   k8sServiceHost: localhost
   k8sServicePort: 7445
 
+  bgpControlPlane:
+    enabled: true
+
   gatewayAPI:
     enabled: true
 
@@ -25,9 +33,6 @@ cilium:
     autoMount:
       enabled: false
     hostRoot: /sys/fs/cgroup
-
-  ipam:
-    mode: kubernetes
 
   securityContext:
     capabilities:

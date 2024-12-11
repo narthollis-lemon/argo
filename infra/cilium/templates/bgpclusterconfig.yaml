@@ -1,0 +1,44 @@
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPClusterConfig
+metadata:
+  name: cilium-bgp
+spec:
+  bgpInstances:
+  - name: "instance-65000"
+    localASN: 65000
+    peers:
+    - name: "rb-v4"
+      peerASN: 65001
+      peerAddress: 192.168.174.1
+      peerConfigRef:
+        name: "cilium-peer"
+    - name: "rb-v6"
+      peerASN: 65001
+      peerAddress: fe80::2ec8:1bff:fe56:e304
+      peerConfigRef:
+        name: "cilium-peer"
+---
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPPeerConfig
+metadata:
+  name: cilium-peer
+spec:
+  timers:
+    holdTimeSeconds: 9
+    keepAliveTimeSeconds: 3
+  # authSecretRef: bgp-auth-secret # TODO
+  # ebgpMultihop: 4 # not needed
+  gracefulRestart:
+    enabled: true
+    restartTimeSeconds: 15
+  families:
+    - afi: ipv4
+      safi: unicast
+      advertisements:
+        matchLabels:
+          advertise: "bgp"
+    - afi: ipv6
+      safi: unicast
+      advertisements:
+        matchLabels:
+          advertise: "bgp"

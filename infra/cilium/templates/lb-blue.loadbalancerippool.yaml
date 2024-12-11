@@ -1,0 +1,10 @@
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: "lb-blue"
+  labels:
+    advertise: bgp
+spec:
+  blocks:
+  - cidr: "192.168.175.0/24"
+  - cidr: "2403:580d:885c:1000::/64"
