@@ -6,5 +6,8 @@ metadata:
     advertise: bgp
 spec:
   blocks:
-  - cidr: "192.168.175.0/24"
   - cidr: "2403:580d:885c:1000::/64"
+  - cidr: "192.168.175.0/24"
+  serviceSelector:
+    matchExpressions:
+      - { key: bgp, operator: In, values: [ blue ] }

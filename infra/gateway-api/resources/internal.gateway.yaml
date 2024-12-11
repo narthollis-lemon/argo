@@ -11,3 +11,17 @@ spec:
   - protocol: HTTPS
     port: 443
     name: https-gw
+  infrastructure:
+    labels:
+      bgp: blue
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cilium-gateway-internal
+  namespace: kube-system
+  labels:
+    bgp: blue
+spec:
+  ipFamilyPolicy: PreferDualStack
+  type: LoadBalancer
