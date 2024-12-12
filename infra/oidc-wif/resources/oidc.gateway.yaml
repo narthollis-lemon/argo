@@ -1,0 +1,27 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: oidc
+spec:
+  gatewayClassName: cilium
+  listeners:
+  - protocol: HTTP
+    port: 80
+    name: http-gw
+  - protocol: HTTPS
+    port: 443
+    name: https-gw
+  infrastructure:
+    labels:
+      bgp: blue
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cilium-gateway-oidc
+  namespace: kube-system
+  labels:
+    bgp: blue
+spec:
+  ipFamilyPolicy: PreferDualStack
+  type: LoadBalancer
