@@ -1,0 +1,15 @@
+apiVersion: gateway.networking.k8s.io/v1alpha3
+kind: BackendTLSPolicy
+metadata:
+  name: oidc
+spec:
+  targetRefs:
+    - group: ""
+      kind: Service
+      name: kubernetes
+  validation:
+    hostname: kubernetes.default.svc.cluster.local
+    caCertificateRefs:
+      - group: ""
+        kind: ConfigMap
+        name: kube-root-ca.crt
