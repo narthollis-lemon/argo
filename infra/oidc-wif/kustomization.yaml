@@ -7,3 +7,4 @@ resources:
   - resources/anonymous-oidc.crb.yaml
   - resources/oidc.gateway.yaml
   - resources/oidc.httproute.yaml
+  - resoruces/kubernetes.backendtlsproxy.yaml
