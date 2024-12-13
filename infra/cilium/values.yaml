@@ -7,10 +7,10 @@ cilium:
   ipv6:
     enabled: true
 
-  enableIPv4Masquerade: true
-  enableIPv6Masquerade: true
+  enableIPv4Masquerade: false
+  enableIPv6Masquerade: false
   bpf:
-    masquerade: true
+    masquerade: false
 
   ipam:
     mode: kubernetes
