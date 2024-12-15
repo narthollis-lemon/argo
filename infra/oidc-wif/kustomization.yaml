@@ -8,3 +8,5 @@ resources:
   - resources/oidc.gateway.yaml
   - resources/oidc.httproute.yaml
   - resources/kubernetes.backendtlsproxy.yaml
+  - resources/oidc.certificate.yaml
+  - resources/oidc.issuer.yaml

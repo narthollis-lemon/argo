@@ -11,6 +11,13 @@ spec:
   - protocol: HTTPS
     port: 443
     name: https-gw
+    hostname: oidc.moya.lemon.narthollis.net
+    tls:
+      mode: Terminate
+      certificateRefs:
+        - group: ""
+          kind: Secret
+          name: oidc-moya-lemon-narthollis-net-tls
   infrastructure:
     labels:
       bgp: blue

@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: oidc-moya-lemon-narthollis-net-tls
+  namespace: default
+spec:
+  issuerRef:
+    name: oidc-letsencrypt
+  dnsNames:
+  - oidc.moya.lemon.narthollis.net
+  secretName: oidc-moya-lemon-narthollis-net-tls
