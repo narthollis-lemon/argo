@@ -7,10 +7,30 @@ resources:
   - https://github.com/cert-manager/cert-manager/releases/download/v1.16.2/cert-manager.yaml
 
 patches:
-  - patch: |-
+  - target:
+      kind: Deployment
+      name: cert-manager
+    patch: |-
       - op: add
         path: /spec/template/spec/containers/0/args/-
         value: --enable-gateway-api
-    target:
+  - target:
       kind: Deployment
       name: cert-manager
+    patch: |-
+      - op: test
+        path: /spec/template/spec/containers/0/args/2
+        value: --leader-election-namespace=kube-system
+      - op: replace
+        path: /spec/template/spec/containers/0/args/2
+        value: --leader-election-namespace=cert-manager
+  - target:
+      kind: Deployment
+      name: cert-manager-cainjector
+    patch: |-
+      - op: test
+        path: /spec/template/spec/containers/0/args/1
+        value: --leader-election-namespace=kube-system
+      - op: replace
+        path: /spec/template/spec/containers/0/args/1
+        value: --leader-election-namespace=cert-manager
