@@ -12,6 +12,5 @@ spec:
       - http01:
           gatewayHTTPRoute:
             parentRefs:
-              - name: oicd
-                namespace: oidc
+              - name: oidc
                 kind: Gateway
