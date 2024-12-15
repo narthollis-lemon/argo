@@ -21,6 +21,8 @@ spec:
           name: oidc-moya-lemon-narthollis-net-tls
   infrastructure:
     labels:
+      app.kubernetes.io/name: cluster-oidc-proxy
+      app.kubernetes.io/version: 1.0.0
       bgp: blue
 ---
 apiVersion: v1

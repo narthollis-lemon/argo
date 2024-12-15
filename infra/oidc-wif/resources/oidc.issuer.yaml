@@ -12,5 +12,6 @@ spec:
       - http01:
           gatewayHTTPRoute:
             parentRefs:
-              - name: oidc
+              - group: gateway.networking.k8s.io
                 kind: Gateway
+                name: oidc

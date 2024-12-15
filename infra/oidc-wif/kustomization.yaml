@@ -5,8 +5,34 @@ namespace: default
 
 resources:
   - resources/anonymous-oidc.crb.yaml
+  - resources/kubernetes.backendtlsproxy.yaml
+  - resources/oidc-proxy.deployment.yaml
+  - resources/oidc-proxy.service.yaml
+  - resources/oidc.certificate.yaml
   - resources/oidc.gateway.yaml
   - resources/oidc.httproute.yaml
-  - resources/kubernetes.backendtlsproxy.yaml
-  - resources/oidc.certificate.yaml
   - resources/oidc.issuer.yaml
+
+images:
+  - name: nginx
+    newTag: 1.27.3-alpine-slim
+
+labels:
+  - pairs:
+      app.kubernetes.io/name: cluster-oidc-proxy
+      app.kubernetes.io/version: 1.0.0
+    includeSelectors: true
+    includeTemplates: true
+
+configMapGenerator:
+  - name: oidc-proxy-config
+    files:
+    - files/oidc-proxy.nginx.conf
+
+# patches:
+#   - target:
+#       kind: Service
+#       name: cilium-gateway-oidc
+#     patch: |-
+#       - op: remove
+#         path: /spec/selector
