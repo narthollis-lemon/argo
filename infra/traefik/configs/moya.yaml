@@ -3,6 +3,5 @@ kind: ArgoApplication
 metadata:
   namespace: traefik
 spec:
-  source:
-    helm:
-      skipCrds: true
+  helm:
+    skipCrds: true
