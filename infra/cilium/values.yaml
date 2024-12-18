@@ -27,7 +27,7 @@ cilium:
     enabled: true
 
   gatewayAPI:
-    enabled: true
+    enabled: false
 
   cgroup:
     autoMount:
