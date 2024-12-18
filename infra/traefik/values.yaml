@@ -7,12 +7,25 @@ traefik:
 
   providers:
     kubernetesCRD:
-      enabled: false
+      enabled: true
     kubernetesGateway:
       enabled: true
       experimentalChannel: true
     kubernetesIngress:
       enabled: false
+
+  ingressRoute:
+    dashboard:
+      enabled: true
+
+  gateway:
+    enabled: false
+
+  logs:
+    general:
+      level: INFO
+    access:
+      enabled: true
 
   service:
     labels:
