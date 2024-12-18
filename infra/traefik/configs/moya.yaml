@@ -5,4 +5,4 @@ metadata:
 spec:
   source:
     helm:
-      installCRDs: false
+      skipCrds: true
