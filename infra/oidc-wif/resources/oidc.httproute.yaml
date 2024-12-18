@@ -20,6 +20,6 @@ spec:
       backendRefs:
         - group: ""
           kind: Service
-          name: oidc-proxy
-          port: 80
+          name: kubernetes
+          port: 443
           weight: 1
