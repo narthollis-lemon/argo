@@ -1,5 +1,8 @@
 # yaml-language-server: $schema=values.schema.json
 traefik:
+  image:
+    tag: v3.3.0-rc1
+
   ports:
     websecure:
       http3:
