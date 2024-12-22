@@ -4,13 +4,13 @@ metadata:
   name: oidc
 spec:
   targetRefs:
-    - group: ""
+    - group: core
       kind: Service
       name: kubernetes
       sectionName: https
   validation:
     hostname: kubernetes.default.svc.cluster.local
     caCertificateRefs:
-      - group: ""
+      - group: core
         kind: ConfigMap
         name: kube-root-ca.crt
