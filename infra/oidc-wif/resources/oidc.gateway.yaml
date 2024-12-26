@@ -19,19 +19,3 @@ spec:
         - group: ""
           kind: Secret
           name: oidc-moya-lemon-narthollis-net-tls
-  # infrastructure:
-  #   labels:
-  #     app.kubernetes.io/name: cluster-oidc-proxy
-  #     app.kubernetes.io/version: 1.0.0
-  #     bgp: blue
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: cilium-gateway-oidc
-#   namespace: kube-system
-#   labels:
-#     bgp: blue
-# spec:
-#   ipFamilyPolicy: PreferDualStack
-#   type: LoadBalancer

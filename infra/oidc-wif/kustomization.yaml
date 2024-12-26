@@ -6,8 +6,6 @@ namespace: default
 resources:
   - resources/anonymous-oidc.crb.yaml
   - resources/kubernetes.backendtlsproxy.yaml
-  - resources/oidc-proxy.deployment.yaml
-  - resources/oidc-proxy.service.yaml
   - resources/oidc.certificate.yaml
   - resources/oidc.gateway.yaml
   - resources/oidc.httproute.yaml
