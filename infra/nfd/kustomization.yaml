@@ -3,3 +3,12 @@ kind: Kustomization
 
 resources:
   - https://github.com/kubernetes-sigs/node-feature-discovery/deployment/overlays/default?ref=v0.17.1
+
+patches:
+  - target:
+      kind: Namespace
+    patch: |-
+      - op: add
+        path: /metadata/labels
+        value:
+          pod-security.kubernetes.io/enforce: privileged
