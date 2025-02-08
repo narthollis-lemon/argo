@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-moya-lemon-narthollis-net-tls
+  namespace: default
+spec:
+  issuerRef:
+    name: argocd-letsencrypt
+  dnsNames:
+  - argocd.moya.lemon.narthollis.net
+  secretName: argocd-moya-lemon-narthollis-net-tls

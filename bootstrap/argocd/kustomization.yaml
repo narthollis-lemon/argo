@@ -10,6 +10,10 @@ resources:
   - resources/argocd.application.yaml # bootstrap apps should self manage1
   - resources/argocd-view.clusterrole.yaml # setup some cluster roles tagged for aggregation into default bindings
   - resources/moya-cluster.secret.yaml
+  - resources/argocd.gateway.yaml
+  - resources/argocd.issuer.yaml
+  - resources/argocd.certificate.yaml
+  - resources/argocd.httproute.yaml
 
 configMapGenerator:
   - name: argocd-cm
