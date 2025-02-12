@@ -11,9 +11,14 @@ resources:
   - resources/argocd-view.clusterrole.yaml # setup some cluster roles tagged for aggregation into default bindings
   - resources/moya-cluster.secret.yaml
   - resources/argocd.gateway.yaml
+  - resources/argocd-letsencrypt.issuer.yaml
+  - resources/argocd-public.certificate.yaml
   - resources/argocd.issuer.yaml
-  - resources/argocd.certificate.yaml
+  - resources/argocd-dex-server.certificate.yaml
+  - resources/argocd-repo-server.certificate.yaml
+  - resources/argocd-server.certificate.yaml
   - resources/argocd.httproute.yaml
+  - resources/argocd.backendtlsproxy.yaml
 
 configMapGenerator:
   - name: argocd-cm
@@ -24,6 +29,6 @@ configMapGenerator:
       #- admin.enabled=false
       - statusbadge.enabled=true
       - users.anonymous.enabled=true
-      #- url: https://argo.moya.lemon.narthollis.net
+      - url=https://argo.moya.lemon.narthollis.net
     files:
       - resource.exclusions=config/resource.exclusions.yaml

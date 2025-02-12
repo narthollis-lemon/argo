@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-server
+  namespace: default
+spec:
+  issuerRef:
+    name: argocd-ca
+  dnsNames:
+  - argocd-server
+  - argocd-server.argocd.svc
+  - argocd-server.argocd.svc.cluster.local
+  - argocd-server-metrics
+  - argocd-server-metrics.argocd.svc
+  - argocd-server-metrics.argocd.svc.cluster.local
+  secretName: argocd-server-tls

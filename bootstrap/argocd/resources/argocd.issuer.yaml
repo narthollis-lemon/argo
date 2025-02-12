@@ -1,17 +1,51 @@
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: argocd-letsencrypt
-  namespace: default
+  name: argocd-selfsigned-issuer
+  namespace: argocd
 spec:
-  acme:
-    server: https://acme-v02.api.letsencrypt.org/directory
-    privateKeySecretRef:
-      name: letsencrypt-issuer
-    solvers:
-      - http01:
-          gatewayHTTPRoute:
-            parentRefs:
-              - group: gateway.networking.k8s.io
-                kind: Gateway
-                name: argocd
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-ca
+  namespace: argocd
+spec:
+  isCA: true
+  commonName: argocd-ca
+  secretName: argocd-ca-secret
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  issuerRef:
+    name: argocd-selfsigned-issuer
+    kind: Issuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: argocd-ca
+  namespace: argocd
+spec:
+  ca:
+    secretName: argocd-ca-secret
+---
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: argocd-ca-bundle
+  namespace: argocd
+spec:
+  sources:
+  - useDefaultCAs: true
+  - secret:
+      name: argocd-ca-secret
+      key: tls.crt
+  target:
+    configMap:
+      key: ca.crt
+    namespaceSelector:
+      matchLabels:
+        kubernetes.io/metadata.name: argocd
