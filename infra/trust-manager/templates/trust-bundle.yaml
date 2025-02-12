@@ -1,0 +1,28 @@
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: cluster-ca-with-defaults-bundle
+  namespace: {{ .Release.Namespace }}
+spec:
+  sources:
+  - useDefaultCAs: true
+  - secret:
+      name: cluster-ca-secret
+      key: tls.crt
+  target:
+    configMap:
+      key: ca.crt
+---
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: cluster-ca-bundle
+  namespace: {{ .Release.Namespace }}
+spec:
+  sources:
+  - secret:
+      name: cluster-ca-secret
+      key: tls.crt
+  target:
+    configMap:
+      key: ca.crt

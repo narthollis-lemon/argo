@@ -1,12 +1,4 @@
 apiVersion: cert-manager.io/v1
-kind: Issuer
-metadata:
-  name: argocd-selfsigned-issuer
-  namespace: argocd
-spec:
-  selfSigned: {}
----
-apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: argocd-ca
@@ -19,8 +11,8 @@ spec:
     algorithm: ECDSA
     size: 256
   issuerRef:
-    name: argocd-selfsigned-issuer
-    kind: Issuer
+    name: cluster-ca
+    kind: ClusterIssuer
     group: cert-manager.io
 ---
 apiVersion: cert-manager.io/v1
@@ -31,21 +23,3 @@ metadata:
 spec:
   ca:
     secretName: argocd-ca-secret
----
-apiVersion: trust.cert-manager.io/v1alpha1
-kind: Bundle
-metadata:
-  name: argocd-ca-bundle
-  namespace: argocd
-spec:
-  sources:
-  - useDefaultCAs: true
-  - secret:
-      name: argocd-ca-secret
-      key: tls.crt
-  target:
-    configMap:
-      key: ca.crt
-    namespaceSelector:
-      matchLabels:
-        kubernetes.io/metadata.name: argocd
