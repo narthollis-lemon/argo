@@ -13,7 +13,6 @@ spec:
       - path:
           type: PathPrefix
           value: /
-        method: GET
       backendRefs:
         - group: ""
           kind: Service
