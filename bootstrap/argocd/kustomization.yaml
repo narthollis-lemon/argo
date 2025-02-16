@@ -32,3 +32,4 @@ configMapGenerator:
       - url=https://argo.moya.lemon.narthollis.net
     files:
       - resource.exclusions=config/resource.exclusions.yaml
+      - dex.config=config/dex-config.yaml

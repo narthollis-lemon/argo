@@ -1,0 +1,8 @@
+connectors:
+- config:
+    issuer: https://accounts.google.com
+    clientID: 1050088916791-3fiepq28gtkd3352j2p3anl460o8fdhs.apps.googleusercontent.com 
+    clientSecret: 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
+  type: oidc
+  id: google
+  name: Google
