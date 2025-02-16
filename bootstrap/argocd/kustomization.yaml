@@ -29,9 +29,13 @@ configMapGenerator:
       #- admin.enabled=false
       - statusbadge.enabled=true
       - users.anonymous.enabled=false
-      - policy.default=role:readonly
       - url=https://argocd.moya.lemon.narthollis.net
     files:
       - resource.exclusions=config/resource.exclusions.yaml
       - dex.config=config/dex-config.yaml
+  - name: argocd-rbac-cm
+    behavior: merge
+    literals:
+      - policy.default=role:readonly
+    files:
       - policy.csv=config/policy.csv
