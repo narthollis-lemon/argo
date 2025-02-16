@@ -29,6 +29,8 @@ configMapGenerator:
       #- admin.enabled=false
       - statusbadge.enabled=true
       - users.anonymous.enabled=false
+      - policy.default=role:readonly
+      - scopes='[groups, email]'
       - url=https://argocd.moya.lemon.narthollis.net
     files:
       - resource.exclusions=config/resource.exclusions.yaml
