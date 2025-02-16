@@ -29,7 +29,7 @@ configMapGenerator:
       #- admin.enabled=false
       - statusbadge.enabled=true
       - users.anonymous.enabled=true
-      - url=https://argo.moya.lemon.narthollis.net
+      - url=https://argocd.moya.lemon.narthollis.net
     files:
       - resource.exclusions=config/resource.exclusions.yaml
       - dex.config=config/dex-config.yaml
