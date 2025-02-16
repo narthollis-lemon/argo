@@ -28,7 +28,7 @@ configMapGenerator:
       - application.resourceTrackingMethod=annotation
       #- admin.enabled=false
       - statusbadge.enabled=true
-      - users.anonymous.enabled=true
+      - users.anonymous.enabled=false
       - url=https://argocd.moya.lemon.narthollis.net
     files:
       - resource.exclusions=config/resource.exclusions.yaml
