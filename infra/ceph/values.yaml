@@ -6,6 +6,7 @@ rook-ceph-cluster:
     storage:
       useAllNodes: false
       useAllDevices: false
+      deviceFilter: sda
     placement:
       mon:
         nodeAffinity:
