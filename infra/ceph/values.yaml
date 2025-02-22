@@ -4,11 +4,20 @@ rook-ceph-cluster:
       enabled: true
     # cluster level storage configuration and selection
     storage:
-      useAllNodes: false
-      useAllDevices: false
+      useAllNodes: true
+      useAllDevices: true
       deviceFilter: sda
     placement:
       mon:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: narthollis.net/rook-node
+                operator: In
+                values:
+                - "true"
+      osd:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
