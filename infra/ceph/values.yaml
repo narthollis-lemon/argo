@@ -1,0 +1,18 @@
+rook-ceph-cluster:
+  cephClusterSpec:
+    dashboard:
+      enabled: true
+    # cluster level storage configuration and selection
+    storage:
+      useAllNodes: false
+      useAllDevices: false
+    placement:
+      mon:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: narthollis.net/rook-node
+                operator: In
+                values:
+                - "true"
