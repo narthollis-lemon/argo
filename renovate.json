@@ -4,6 +4,8 @@
         "config:recommended",
         ":dependencyDashboard"
     ],
+    "assignees": ["narthollis"],
+    "reviewers": ["narthollis"],
     "customManagers": [
         {
             "customType": "regex",
