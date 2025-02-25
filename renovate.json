@@ -6,6 +6,7 @@
     ],
     "assignees": ["narthollis"],
     "reviewers": ["narthollis"],
+    "assignAutomerge": true,
     "customManagers": [
         {
             "customType": "regex",
