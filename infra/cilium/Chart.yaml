@@ -26,4 +26,4 @@ appVersion: "1.17.0-pre.3"
 dependencies:
   - name: cilium
     repository: https://helm.cilium.io/
-    version: 1.17.1
+    version: 1.17.2
