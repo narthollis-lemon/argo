@@ -26,4 +26,4 @@ appVersion: "1.16.0"
 dependencies:
   - name: spegel
     repository: oci://ghcr.io/spegel-org/helm-charts
-    version: v0.0.30
+    version: 0.1.0
