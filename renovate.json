@@ -18,5 +18,8 @@
             ],
             "datasourceTemplate": "github-releases"
         }
-    ]
+    ],
+    "argocd": {
+        "fileMatch": ["\\.application\\.yaml$"]
+    }
 }
