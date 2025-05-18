@@ -3,3 +3,18 @@ kind: Kustomization
 
 resources:
   - https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/operator/default?ref=v0.32.1
+
+patches:
+  - target:
+      kind: Deployment
+      name: intel-deviceplugins-controller-manager
+    patch: |
+      kind: Deployment
+      metadata:
+        name: intel-deviceplugins-controller-manager
+      spec:
+        template:
+          spec:
+            nodeSelector:
+              kubernetes.io/arch: amd64
+              kubernetes.io/os: linux
