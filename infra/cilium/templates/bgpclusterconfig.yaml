@@ -17,7 +17,7 @@ spec:
       peers:
         - name: "rb-v6"
           peerASN: 65001
-          peerAddress: 2403:580d:885c:0:2ec8:1bff:fe56:e304
+          peerAddress: 2403:580d:885c:0:f61e:57ff:fed8:a15b
           peerConfigRef:
             name: "cilium-peer-v6"
 ---
