@@ -26,7 +26,7 @@ appVersion: "1.16.0"
 dependencies:
   - name: rook-ceph
     repository: https://charts.rook.io/release/
-    version: v1.17.3
+    version: v1.18.3
   - name: rook-ceph-cluster
     repository: https://charts.rook.io/release/
     version: v1.18.3
