@@ -13,7 +13,7 @@ resources:
 
 images:
   - name: nginx
-    newTag: 1.29.1-alpine-slim
+    newTag: 1.29.2-alpine-slim
 
 labels:
   - pairs:
