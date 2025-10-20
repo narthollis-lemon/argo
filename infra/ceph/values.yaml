@@ -2,27 +2,180 @@ rook-ceph-cluster:
   cephClusterSpec:
     dashboard:
       enabled: true
-    # cluster level storage configuration and selection
-    storage:
-      useAllNodes: true
-      useAllDevices: true
-      deviceFilter: sda
+
+    # The option to automatically remove OSDs that are out and are safe to destroy.
+    removeOSDsIfOutAndSafeToRemove: true
+
+    # --- Node Placement (Applies to all Ceph components) ---
     placement:
-      mon:
+      all:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: narthollis.net/rook-node
-                operator: In
-                values:
-                - "true"
-      osd:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: narthollis.net/rook-node
-                operator: In
-                values:
-                - "true"
+              - matchExpressions:
+                  - key: "narthollis.net/rook-node"
+                    operator: In
+                    values:
+                      - "true"
+
+    # --- Storage Configuration (OSDs) ---
+    storage:
+      useAllNodes: false   # Only use nodes targeted by the placement section
+      volumeClaimTemplates: [] # Use raw block devices (HostPath LVM/device)
+
+      storageClassDeviceSets:
+        # =======================================================
+        # ⚡ 1. SATA SSD OSDs (Fast Pool)
+        # Uses the stable WWID pattern 'naa.' to target all SATA drives.
+        # This automatically excludes NVMe (nvme.) and USB (usb-).
+        # =======================================================
+        - name: ssd-data-devices
+          count: 1
+          deviceSetGroup:
+            deviceSetGroupSpec:
+              # Targets all disks with the 'naa.' WWID pattern (your SSDs)
+              # Note: The backslash is needed to match the literal dot in the regex.
+              deviceFilter: "naa\\."
+              deviceType: "ssd"
+              config:
+                deviceClass: ssd
+        # =======================================================
+        # 🐢 2. USB HDD OSDs (Slow/Bulk Pool)
+        # Uses the 'usb-' pattern to target the USB drives.
+        # =======================================================
+        - name: hdd-data-devices
+          count: 1
+          deviceSetGroup:
+            deviceSetGroupSpec:
+              # Targets all disks with the 'usb-' stable ID pattern (your HDDs)
+              deviceFilter: "usb-"
+              deviceType: "hdd"
+              config:
+                deviceClass: hdd
+
+  cephBlockPools:
+    # =======================================================
+    # 1. fast-block (SSD, Replication 3)
+    # =======================================================
+    - name: fast-block-pool
+      spec:
+        replicated:
+          size: 3
+        deviceClass: ssd # Uses the SSD OSDs
+      storageClass:
+        enabled: true
+        name: fast-block
+        isDefault: true
+        parameters:
+          imageFormat: "2"
+          imageFeatures: layering
+          csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+          csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
+          csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+          csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
+          csi.storage.k8s.io/controller-publish-secret-name: rook-csi-rbd-provisioner
+          csi.storage.k8s.io/controller-publish-secret-namespace: "{{ .Release.Namespace }}"
+          csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+          csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
+          csi.storage.k8s.io/fstype: ext4
+
+    # =======================================================
+    # 2. slow-block (HDD, 2+1 Erasure Coding)
+    # =======================================================
+    - name: slow-block-pool
+      spec:
+        erasureCoded:
+          dataChunks: 2
+          codingChunks: 1 # K=2, M=1 -> Requires 3 OSDs, 1.5x overhead
+        deviceClass: hdd # Uses the HDD OSDs
+      storageClass:
+        enabled: true
+        name: slow-block
+        isDefault: false
+        parameters:
+          imageFormat: "2"
+          imageFeatures: layering
+          csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+          csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
+          csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+          csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
+          csi.storage.k8s.io/controller-publish-secret-name: rook-csi-rbd-provisioner
+          csi.storage.k8s.io/controller-publish-secret-namespace: "{{ .Release.Namespace }}"
+          csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+          csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
+          csi.storage.k8s.io/fstype: ext4
+
+  cephFileSystems:
+    # =======================================================
+    # 3. fast-filesystem (SSD, Replication 3)
+    # =======================================================
+    - name: fast-filesystem
+      spec:
+        metadataServer:
+          active: 2
+          activeStandby: true
+
+        metadataPool:
+          failureDomain: host
+          replicated:
+            size: 3
+          deviceClass: ssd # Metadata on SSDs for performance
+
+        dataPools:
+          - name: fast-cephfs-data-pool
+            failureDomain: host
+            replicated:
+              size: 3 # Data on SSDs for performance
+            deviceClass: ssd
+      storageClass:
+        enabled: true
+        name: fast-filesystem # SC for fast RWX volumes
+        isDefault: false
+        parameters:
+          csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
+          csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
+          csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
+          csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
+          csi.storage.k8s.io/controller-publish-secret-name: rook-csi-cephfs-provisioner
+          csi.storage.k8s.io/controller-publish-secret-namespace: "{{ .Release.Namespace }}"
+          csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
+          csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
+
+    # =======================================================
+    # 4. slow-filesystem (HDD, 2+1 Erasure Coding)
+    # =======================================================
+    - name: slow-filesystem
+      spec:
+        metadataServer:
+          active: 2
+          activeStandby: true
+
+        # IMPORTANT: Keep metadata on SSDs, even for a slow filesystem, for acceptable latency.
+        metadataPool:
+          failureDomain: host
+          replicated:
+            size: 3
+          deviceClass: ssd # Metadata on SSDs is crucial
+
+        dataPools:
+          - name: slow-cephfs-data-pool
+            failureDomain: host
+            erasureCoded:
+              dataChunks: 2
+              codingChunks: 1 # Data on HDDs with EC for capacity
+            deviceClass: hdd
+      storageClass:
+        enabled: true
+        name: slow-filesystem # SC for slow/bulk RWX volumes
+        isDefault: false
+        parameters:
+          csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
+          csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
+          csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
+          csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
+          csi.storage.k8s.io/controller-publish-secret-name: rook-csi-cephfs-provisioner
+          csi.storage.k8s.io/controller-publish-secret-namespace: "{{ .Release.Namespace }}"
+          csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
+          csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
+
+  cephObjectStores: [] # Disables the creation of any CephObjectStore CRs
