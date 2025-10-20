@@ -4,14 +4,18 @@
         "config:recommended",
         ":dependencyDashboard"
     ],
-    "assignees": ["narthollis"],
-    "reviewers": ["narthollis"],
+    "assignees": [
+        "narthollis"
+    ],
+    "reviewers": [
+        "narthollis"
+    ],
     "assignAutomerge": true,
     "customManagers": [
         {
             "customType": "regex",
-            "fileMatch": [
-                "kustomization.yaml"
+            "managerFilePatterns": [
+                "/kustomization.yaml/"
             ],
             "matchStrings": [
                 "https://github\\.com/(?<depName>.*/.*?)/releases/download/(?<currentValue>.*?)/"
@@ -20,6 +24,8 @@
         }
     ],
     "argocd": {
-        "fileMatch": ["\\.application\\.yaml$"]
+        "managerFilePatterns": [
+            "/\\.application\\.yaml$/"
+        ]
     }
 }
