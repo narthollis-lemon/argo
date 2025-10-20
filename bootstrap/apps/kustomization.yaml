@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: argocd
+
+resources:
+  - resources/infra.application.yaml # bootstrap apps should self manage
+  - resources/infra.applicationset.yaml # applicationset that uses git generator to create the infra apps
+  - resources/infra.appproject.yaml

@@ -1,0 +1,84 @@
+# yaml-language-server: $schema=../../../argo.schema.json
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/name: apps
+  name: apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  # goTemplateOptions:
+  #   - missingkey=error
+  generators:
+    - matrix:
+        generators:
+          - clusters: {}
+          - git:
+              repoURL: https://github.com/narthollis-lemon/argo.git
+              revision: add-media-app # HEAD
+              files:
+                - path: 'apps/*/config/{{ .name }}/*.yaml'
+              values:
+                cluster: '{{ .name }}'
+                server: '{{ .server }}'
+      selector:
+        matchExpressions:
+          - key: apiVersion
+            operator: In
+            values:
+              - narthollis.net/v1alpha1
+          - key: kind
+            operator: In
+            values:
+              - ArgoApplication
+  template:
+    metadata:
+      name: |-
+        {{- $app := (index .path.segments 1) -}}
+        {{- $instance := (.path.filename | splitList "." | reverse | rest | reverse | join ".") -}}
+        {{- .values.cluster -}}-{{- $app -}}
+        {{- if ne $app $instance -}}
+        -{{- $instance -}}
+        {{- end -}}
+    spec:
+      project: apps
+      source:
+        repoURL: '{{ dig "repoURL" "https://github.com/narthollis-lemon/argo.git" .spec }}'
+        targetRevision: '{{ dig "targetRevision" "HEAD" .spec }}'
+      destination:
+        server: "{{ .values.server }}"
+        namespace: "{{ .metadata.namespace }}"
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: true
+          allowEmpty: false
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        managedNamespaceMetadata:
+          labels:
+            app.kubernetes.io/managed-by: argocd
+      info:
+        - name: Debug
+          value: |
+            {{ . | toYaml }}
+  templatePatch: |
+    spec:
+      source:
+        {{- if (not (hasKey .spec "repoURL")) }}
+        path: "{{ index .path.segments 0 }}/{{ index .path.segments 1 }}"
+        {{- end }}
+        {{- if (hasKey .spec "helm") }}
+        helm:
+          {{ .spec.helm | toYaml | indent 6 }}
+        {{- end }}
+        {{- if (hasKey .spec "kustomize")  }}
+        kustomize:
+          {{ .spec.kustomize | toYaml | indent 6 }}
+        {{- end }}
+  syncPolicy:
+    applicationsSync: sync
+  # applyNestedSelectors: true
