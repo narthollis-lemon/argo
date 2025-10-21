@@ -100,7 +100,7 @@ rook-ceph-cluster:
           deviceClass: ssd # Metadata on SSDs for performance
 
         dataPools:
-          - name: fast-cephfs-data-pool
+          - name: fast-filesystem-data0
             failureDomain: host
             replicated:
               size: 3 # Data on SSDs for performance
@@ -140,7 +140,7 @@ rook-ceph-cluster:
           deviceClass: ssd # Metadata on SSDs is crucial
 
         dataPools:
-          - name: slow-cephfs-data-pool
+          - name: slow-filesystem-data0
             failureDomain: host
             erasureCoded:
               dataChunks: 2
