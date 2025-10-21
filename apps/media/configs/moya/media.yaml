@@ -3,4 +3,5 @@ kind: ArgoApplicationc
 metadata:
   namespace: media
 spec:
+  targetRevision: apps/media/rapid-dev
   kustomize: {}
