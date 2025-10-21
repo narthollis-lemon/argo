@@ -9,7 +9,7 @@ plex-media-server:
   extraVolumeMounts:
     - name: media-library
       mountPath: /media-library/
-    - name: dev-dir
+    - name: dev-dri
       mountPath: /dev/dri
 
   extraVolumes:
