@@ -9,8 +9,14 @@ plex-media-server:
   extraVolumeMounts:
     - name: media-library
       mountPath: /media-library/
+    - name: dev-dir
+      mountPath: /dev/dri
 
   extraVolumes:
     - name: media-library
       persistentVolumeClaim:
         claimName: media-library
+    - name: dev-dri
+      hostPath:
+        path: /dev/dri
+        type: Directory
