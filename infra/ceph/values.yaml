@@ -112,7 +112,7 @@ rook-ceph-cluster:
     - name: fast-filesystem
       spec:
         metadataServer:
-          active: 2
+          activeCount: 2
           activeStandby: true
 
         metadataPool:
@@ -147,7 +147,7 @@ rook-ceph-cluster:
     - name: slow-filesystem
       spec:
         metadataServer:
-          active: 2
+          activeCount: 2
           activeStandby: true
 
         # IMPORTANT: Keep metadata on SSDs, even for a slow filesystem, for acceptable latency.
