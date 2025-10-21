@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: media-library
+  namespace: media
+spec:
+  # RWX allows multiple Pods (Plex, Sonarr, Sabnzbd) to mount and use the volume at once.
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 128Gi
+  storageClassName: fast-filesystem # this should be changed to slow-filesystem once its created
