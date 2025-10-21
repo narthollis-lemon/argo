@@ -17,6 +17,6 @@ spec:
       backendRefs:
         - group: ""
           kind: Service
-          name: plex-server
-          port: 443
+          name: moya-plex-media-server
+          port: 32400
           weight: 1
