@@ -1,6 +1,7 @@
 apiVersion: narthollis.net/v1alpha1
-kind: ArgoApplication
+kind: ArgoApplicationc
 metadata:
   namespace: media
 spec:
+  targetRevision: apps/media/rapid-dev
   kustomize: {}

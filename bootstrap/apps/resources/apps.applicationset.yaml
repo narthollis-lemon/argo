@@ -19,7 +19,7 @@ spec:
               repoURL: https://github.com/narthollis-lemon/argo.git
               revision: HEAD
               files:
-                - path: 'apps/*/config/{{ .name }}/*.yaml'
+                - path: 'apps/*/configs/{{ .name }}/*.yaml'
               values:
                 cluster: '{{ .name }}'
                 server: '{{ .server }}'
