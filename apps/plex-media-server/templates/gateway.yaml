@@ -20,13 +20,9 @@ spec:
         - group: ""
           kind: Secret
           name: plex-moya-lemon-narthollis-net-tls
-  - protocol: HTTPS
+  - protocol: TCP
     port: 32400
     name: plex-gw
-    hostname: plex.moya.lemon.narthollis.net
-    tls:
-      mode: Terminate
-      certificateRefs:
-        - group: ""
-          kind: Secret
-          name: plex-moya-lemon-narthollis-net-tls
+    allowedRoutes:
+      kinds:
+      - kind: TCPRoute
