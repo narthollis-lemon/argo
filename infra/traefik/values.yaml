@@ -4,6 +4,12 @@ traefik:
     websecure:
       http3:
         enabled: true
+    plex:
+      port: 32400
+      expose:
+        default: true
+      exposedPort: 32400
+      protocol: TCP
 
   providers:
     kubernetesCRD:
