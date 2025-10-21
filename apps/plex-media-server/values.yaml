@@ -1,0 +1,16 @@
+plex-media-server:
+  pms:
+    storageClassName: fast-block
+
+  extraEnv:
+    HOSTNAME: "moya"
+    TZ: "Australia/Adelaide"
+
+  extraVolumeMounts:
+    - name: media-library
+      mountPath: /media-library/
+
+  extraVolumes:
+    - name: media-library
+      persistentVolumeClaim:
+        claimName: media-library
