@@ -97,17 +97,18 @@ rook-ceph-cluster:
           failureDomain: host
           replicated:
             size: 3
-          deviceClass: ssd # Metadata on SSDs for performance
+          deviceClass: ssd
 
         dataPools:
-          - name: fast-filesystem-data0
+          - name: data0 # This ends up being "fast-filesystme-data0" which is what is added to the parameters
             failureDomain: host
+            # Fast storage is also our more resiliant storage so run it replicated
             replicated:
-              size: 3 # Data on SSDs for performance
+              size: 3
             deviceClass: ssd
       storageClass:
         enabled: true
-        name: fast-filesystem # SC for fast RWX volumes
+        name: fast-filesystem
         isDefault: false
         reclaimPolicy: Delete
         allowVolumeExpansion: true
@@ -137,14 +138,16 @@ rook-ceph-cluster:
           failureDomain: host
           replicated:
             size: 3
-          deviceClass: ssd # Metadata on SSDs is crucial
+          deviceClass: ssd
 
         dataPools:
-          - name: slow-filesystem-data0
+          - name: data0
             failureDomain: host
+            # The slow filesystem is our bulk storage location so we use erasure coding
+            # rather than full replication to get just that little but more storage
             erasureCoded:
               dataChunks: 2
-              codingChunks: 1 # Data on HDDs with EC for capacity
+              codingChunks: 1
             deviceClass: hdd
       storageClass:
         enabled: true
