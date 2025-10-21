@@ -22,7 +22,7 @@ rook-ceph-cluster:
     storage:
       useAllNodes: true
       useAllDevices: true
-      deviceFilter: "naa\\.|usb-"
+      deviceFilter: "^sd."
       volumeClaimTemplates: [] # Use raw block devices (HostPath LVM/device)
 
   cephBlockPools:
