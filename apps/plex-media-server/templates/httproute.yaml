@@ -9,6 +9,10 @@ spec:
       kind: Gateway
       name: plex
       sectionName: https-gw
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: plex
+      sectionName: plex-gw
   rules:
     - matches:
       - path:
