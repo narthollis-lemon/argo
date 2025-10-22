@@ -9,5 +9,5 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 128Gi
-  storageClassName: fast-filesystem # this should be changed to slow-filesystem once its created
+      storage: 6Ti
+  storageClassName: slow-filesystem
