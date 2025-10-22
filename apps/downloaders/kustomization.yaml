@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- resources/sabnzbd.deployment.yaml
+- resources/sabnzbd.pvc.yaml
+- resources/sabnzbd.service.yaml
+- resources/sabnzbd.httproute.yaml
+
+images:
+- name: lscr.io/linuxserver/sabnzbd:latest
+  newTag: 4.5.3
