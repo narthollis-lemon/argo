@@ -63,15 +63,15 @@ spec:
         {{- end }}
         {{- if (hasKey .spec "helm") }}
         helm:
-          {{ .spec.helm | toYaml | indent 6 }}
+          {{- .spec.helm | toYaml | indent 6 | printf "\n%s" }}
         {{- end }}
         {{- if (hasKey .spec "kustomize")  }}
         kustomize:
-          {{ .spec.kustomize | toYaml | indent 6 }}
+          {{- .spec.kustomize | toYaml | indent 6 | printf "\n%s" }}
         {{- end }}
       {{- if (hasKey .spec "ignoreDifferences") }}
       ignoreDifferences:
-        {{ .spec.ignoreDifferences | toYaml | indent 4 }}
+        {{- .spec.ignoreDifferences | toYaml | indent 4 | printf "\n%s" }}
       {{- end }}
   syncPolicy:
     applicationsSync: sync
