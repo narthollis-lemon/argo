@@ -79,6 +79,10 @@ spec:
         kustomize:
           {{ .spec.kustomize | toYaml | indent 6 }}
         {{- end }}
+      {{- if (hasKey .spec "ignoreDifferences") }}
+      ignoreDifferences:
+        {{ .spec.ignoreDifferences | toYaml | indent 4 }}
+      {{- end }}
   syncPolicy:
     applicationsSync: sync
   # applyNestedSelectors: true

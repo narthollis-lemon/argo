@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    name: ssh-migration-server
+  name: ssh-migration-server
+  namespace: media
+spec:
+  containers:
+  - env:
+    - name: PUID
+      value: "1000"
+    - name: PGID
+      value: "1000"
+    - name: USER_NAME
+      value: rsync-user
+    - name: PUBLIC_KEY
+      value: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFbZ35ukTJk5dskrPIsDiCtxKzknMKSP6umUDqK1kQzf
+        nsteicke@rigel
+    image: linuxserver/openssh-server:latest
+    imagePullPolicy: Always
+    name: ssh-server
+    ports:
+    - containerPort: 2222
+      name: ssh
+      protocol: TCP
+    volumeMounts:
+    - mountPath: /home/rsync-user/media-import
+      name: media-target
+  volumes:
+  - name: media-target
+    persistentVolumeClaim:
+      claimName: media-library
+  
