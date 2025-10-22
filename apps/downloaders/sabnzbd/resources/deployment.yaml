@@ -58,6 +58,8 @@ spec:
         volumeMounts:
         - name: run
           mountPath: /run
+        - name: tmp
+          mountPath: /tmp
         - name: config
           mountPath: /config
           readOnly: false
@@ -75,6 +77,8 @@ spec:
       - name: run
         emptyDir:
           medium: Memory
+      - name: tmp
+        emptyDir: {}
       - name: config
         persistentVolumeClaim:
           claimName: sabnzbd-config
