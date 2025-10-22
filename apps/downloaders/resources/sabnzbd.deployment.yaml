@@ -27,6 +27,25 @@ spec:
       containers:
       - name: sabnzbd
         image: lscr.io/linuxserver/sabnzbd:latest
+        ports:
+        - containerPort: 8080
+          name: http
+        startupProbe:
+          httpGet:
+            port: http
+            path: /sabnzbd/login/
+          initialDelaySeconds: 10
+          periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            port: http
+            path: /sabnzbd/login/
+          periodSeconds: 60
+        readinessProbe:
+          httpGet:
+            port: http
+            path: /sabnzbd/login/
+          periodSeconds: 60
         env:
         - name: PUID
           value: "1000"
@@ -48,9 +67,6 @@ spec:
           limits:
             memory: 512Mi
             cpu: 1
-        ports:
-        - containerPort: 8080
-          name: http
       volumes:
       - name: config
         persistentVolumeClaim:
