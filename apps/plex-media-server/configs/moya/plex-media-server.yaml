@@ -5,3 +5,9 @@ metadata:
 spec:
   targetRevision: apps/media/rapid-dev
   helm: {}
+  ignoreDifferences:
+    # Ignore the 'creationTimestamp' field on the generated PVCs
+    - group: "apps"
+      kind: StatefulSet
+      jsonPointers:
+        - /spec/volumeClaimTemplates/0/metadata/creationTimestamp
