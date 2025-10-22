@@ -18,7 +18,7 @@ spec:
     - group: ""
       kind: Service
       name: sonarr
-      port: 8080
+      port: 8989
       weight: 1
     filters:
     - type: ExtensionRef
