@@ -143,6 +143,13 @@ rook-ceph-cluster:
           deviceClass: ssd
 
         dataPools:
+          # For erasure coded pools, we have to create a replicated pool as the default
+          # data pool and an erasure-coded pool as a secondary pool.
+          - name: primary0
+            failureDomain: host
+            replicated:
+              size: 3
+            deviceClass: hdd              
           - name: data0
             failureDomain: host
             # The slow filesystem is our bulk storage location so we use erasure coding
