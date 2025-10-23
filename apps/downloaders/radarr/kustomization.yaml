@@ -8,5 +8,5 @@ resources:
 - resources/httproute.yaml
 
 images:
-- name: lscr.io/linuxserver/radarr:latest
+- name: lscr.io/linuxserver/radarr
   newTag: 5.28.0

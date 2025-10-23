@@ -8,5 +8,5 @@ resources:
 - resources/httproute.yaml
 
 images:
-- name: lscr.io/linuxserver/sabnzbd:latest
+- name: lscr.io/linuxserver/sabnzbd
   newTag: 4.5.3

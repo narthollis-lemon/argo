@@ -8,5 +8,5 @@ resources:
 - resources/httproute.yaml
 
 images:
-- name: lscr.io/linuxserver/sonarr
-  newTag: 4.0.15
+- name: sctx/overseerr
+  newTag: 1.34.0
