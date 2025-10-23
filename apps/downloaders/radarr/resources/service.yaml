@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: radarr
+spec:
+  selector:
+    app.kubernetes.io/name: downloaders
+    app.kubernetes.io/component: radarr
+    app.kubernetes.io/part-of: media
+  ports:
+  - port: 7878
+    targetPort: 7878
+    name: http

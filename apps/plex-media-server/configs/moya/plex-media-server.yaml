@@ -3,7 +3,6 @@ kind: ArgoApplication
 metadata:
   namespace: media
 spec:
-  targetRevision: apps/media/rapid-dev
   helm: {}
   ignoreDifferences:
     # Ignore the 'creationTimestamp' field on the generated PVCs

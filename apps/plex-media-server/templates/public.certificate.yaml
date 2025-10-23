@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: plex-moya-lemon-narthollis-net-tls
+  namespace: {{ .Release.Namespace }}
+spec:
+  issuerRef:
+    name: plex-letsencrypt
+  dnsNames:
+  - plex.moya.lemon.narthollis.net
+  secretName: plex-moya-lemon-narthollis-net-tls

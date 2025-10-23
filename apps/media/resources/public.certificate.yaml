@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: media-moya-lemon-narthollis-net-tls
+  namespace: media
+spec:
+  issuerRef:
+    name: media-letsencrypt
+  dnsNames:
+  - media.moya.lemon.narthollis.net
+  secretName: media-moya-lemon-narthollis-net-tls
