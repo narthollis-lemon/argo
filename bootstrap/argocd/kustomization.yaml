@@ -5,37 +5,41 @@ namespace: argocd
 
 # additional resources like ingress rules, cluster and repository secrets.
 resources:
-  - resources/argocd.namespace.yaml
-  - github.com/argoproj/argo-cd/manifests/cluster-install?ref=v3.1.9
-  - resources/argocd.application.yaml # bootstrap apps should self manage1
-  - resources/argocd-view.clusterrole.yaml # setup some cluster roles tagged for aggregation into default bindings
-  - resources/moya-cluster.secret.yaml
-  - resources/argocd.gateway.yaml
-  - resources/argocd-letsencrypt.issuer.yaml
-  - resources/argocd-public.certificate.yaml
-  - resources/argocd.issuer.yaml
-  - resources/argocd-dex-server.certificate.yaml
-  - resources/argocd-repo-server.certificate.yaml
-  - resources/argocd-server.certificate.yaml
-  - resources/argocd.httproute.yaml
-  - resources/argocd.backendtlsproxy.yaml
+- resources/argocd.namespace.yaml
+- github.com/argoproj/argo-cd/manifests/cluster-install?ref=v3.1.9
+- resources/argocd.application.yaml # bootstrap apps should self manage1
+- resources/argocd-view.clusterrole.yaml # setup some cluster roles tagged for aggregation into default bindings
+- resources/moya-cluster.secret.yaml
+- resources/argocd.gateway.yaml
+- resources/argocd-letsencrypt.issuer.yaml
+- resources/argocd-public.certificate.yaml
+- resources/argocd.issuer.yaml
+- resources/argocd-dex-server.certificate.yaml
+- resources/argocd-repo-server.certificate.yaml
+- resources/argocd-server.certificate.yaml
+- resources/argocd.httproute.yaml
+- resources/argocd.backendtlsproxy.yaml
 
 configMapGenerator:
-  - name: argocd-cm
-    behavior: merge
-    literals:
-      - timeout.reconciliation=15s
-      - application.resourceTrackingMethod=annotation
-      #- admin.enabled=false
-      - statusbadge.enabled=true
-      - users.anonymous.enabled=false
-      - url=https://argocd.moya.lemon.narthollis.net
-    files:
-      - resource.exclusions=config/resource.exclusions.yaml
-      - dex.config=config/dex-config.yaml
-  - name: argocd-rbac-cm
-    behavior: merge
-    literals:
-      - policy.default=role:readonly
-    files:
-      - policy.csv=config/policy.csv
+- name: argocd-cm
+  behavior: merge
+  literals:
+  - timeout.reconciliation=15s
+  - application.resourceTrackingMethod=annotation
+  #- admin.enabled=false
+  - statusbadge.enabled=true
+  - users.anonymous.enabled=false
+  - url=https://argocd.moya.lemon.narthollis.net
+  files:
+  - resource.exclusions=config/resource.exclusions.yaml
+  - dex.config=config/dex-config.yaml
+- name: argocd-rbac-cm
+  behavior: merge
+  literals:
+  - policy.default=role:readonly
+  files:
+  - policy.csv=config/policy.csv
+- name: argocd-cmd-params-cm
+  behavior: merge
+  literals:
+  - controller.diff.server.side=true
