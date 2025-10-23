@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radarr
+  labels:
+    app.kubernetes.io/name: downloaders
+    app.kubernetes.io/component: radarr
+    app.kubernetes.io/part-of: media
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: downloaders
+      app.kubernetes.io/component: radarr
+      app.kubernetes.io/part-of: media
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: downloaders
+        app.kubernetes.io/component: radarr
+        app.kubernetes.io/part-of: media
+    spec:
+      securityContext:
+        runAsGroup: 1000
+        runAsUser: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+      containers:
+      - name: radarr
+        image: lscr.io/linuxserver/radarr:latest
+        ports:
+        - containerPort: 7878
+          name: http
+        startupProbe:
+          httpGet:
+            port: http
+            path: /radarr/ping
+          initialDelaySeconds: 10
+          periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            port: http
+            path: /radarr/ping
+          periodSeconds: 60
+        readinessProbe:
+          httpGet:
+            port: http
+            path: /radarr/ping
+          periodSeconds: 60
+        env:
+        - name: PUID
+          value: "1000"
+        - name: PGUID
+          value: "1000"
+        - name: TZ
+          value: Australia/Adelaide
+        securityContext:
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - name: run
+          mountPath: /run
+        - name: config
+          mountPath: /config
+          readOnly: false
+        - name: media-library
+          mountPath: /media
+          readOnly: false
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 500m
+          limits:
+            memory: 512Mi
+            cpu: 1
+      volumes:
+      - name: run
+        emptyDir:
+          medium: Memory
+      - name: config
+        persistentVolumeClaim:
+          claimName: radarr-config
+      - name: media-library
+        persistentVolumeClaim:
+          claimName: media-library
