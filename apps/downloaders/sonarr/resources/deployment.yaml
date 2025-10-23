@@ -30,22 +30,22 @@ spec:
         ports:
         - containerPort: 8989
           name: http
-        # startupProbe:
-        #   httpGet:
-        #     port: http
-        #     path: /sonarr/login/
-        #   initialDelaySeconds: 10
-        #   periodSeconds: 3
-        # livenessProbe:
-        #   httpGet:
-        #     port: http
-        #     path: /sonarr/login/
-        #   periodSeconds: 60
-        # readinessProbe:
-        #   httpGet:
-        #     port: http
-        #     path: /sonarr/login/
-        #   periodSeconds: 60
+        startupProbe:
+          httpGet:
+            port: http
+            path: /sonarr/ping
+          initialDelaySeconds: 10
+          periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            port: http
+            path: /sonarr/ping
+          periodSeconds: 60
+        readinessProbe:
+          httpGet:
+            port: http
+            path: /sonarr/ping
+          periodSeconds: 60
         env:
         - name: PUID
           value: "1000"
