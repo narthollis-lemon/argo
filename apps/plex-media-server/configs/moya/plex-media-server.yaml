@@ -5,8 +5,8 @@ metadata:
 spec:
   helm: {}
   ignoreDifferences:
-    # Ignore the 'creationTimestamp' field on the generated PVCs
-    - group: "apps"
-      kind: StatefulSet
-      jsonPointers:
-        - /spec/volumeClaimTemplates/0/metadata/creationTimestamp
+  # Ignore the 'creationTimestamp' field on the generated PVCs
+  - group: "apps"
+    kind: StatefulSet
+    jqPathExpressions:
+    - '.spec.volumeClaimTemplates[]?.metadata.creationTimestamp'
