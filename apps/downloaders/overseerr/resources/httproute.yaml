@@ -13,7 +13,7 @@ spec:
   - matches:
     - path:
         type: PathPrefix
-        value: /overseerr
+        value: /
     backendRefs:
     - group: ""
       kind: Service
