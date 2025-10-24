@@ -9,4 +9,4 @@ resources:
 
 images:
 - name: lscr.io/linuxserver/sabnzbd
-  newTag: 4.5.4
+  newTag: 4.5.5
