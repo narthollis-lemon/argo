@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: filebrowser
+  labels:
+    app.kubernetes.io/name: downloaders
+    app.kubernetes.io/component: filebrowser
+    app.kubernetes.io/part-of: media
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: downloaders
+      app.kubernetes.io/component: filebrowser
+      app.kubernetes.io/part-of: media
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: downloaders
+        app.kubernetes.io/component: filebrowser
+        app.kubernetes.io/part-of: media
+    spec:
+      containers:
+      - name: filebrowser
+        image: ghcr.io/gtsteffaniak/filebrowser:latest
+        env:
+        - name: FILEBROWSER_CONFIG
+          value: /etc/filebrowser/config.yaml
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: tmp
+          mountPath: /home/filebrowser/tmp
+          readOnly: false
+        - name: data
+          mountPath: /home/filebrowser/data
+          readOnly: false
+        - name: media-library
+          mountPath: /media
+          readOnly: false
+        - name: config
+          mountPath: /etc/filebrowser
+          readOnly: true
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 250m
+          limits:
+            memory: 128Mi
+            cpu: 500m
+      volumes:
+      - name: tmp
+        emptyDir:
+          medium: Memory
+      - name: config
+        configMap:
+          configMapName: filebrowser
+      - name: data
+        persistentVolumeClaim:
+          claimName: filebrowser-data
+      - name: media-library
+        persistentVolumeClaim:
+          claimName: media-library
