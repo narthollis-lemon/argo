@@ -53,7 +53,7 @@ spec:
           medium: Memory
       - name: config
         configMap:
-          configMapName: filebrowser
+          name: filebrowser
       - name: data
         persistentVolumeClaim:
           claimName: filebrowser-data
