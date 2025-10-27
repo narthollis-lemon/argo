@@ -9,6 +9,12 @@ resources:
 - resources/deployment.yaml
 - resources/data.pvc.yaml
 
+generatorOptions:
+  labels:
+    app.kubernetes.io/name: downloaders
+    app.kubernetes.io/component: filebrowser
+    app.kubernetes.io/part-of: media
+
 configMapGenerator:
 - name: filebrowser
   files:
