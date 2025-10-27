@@ -27,6 +27,23 @@ spec:
           value: /etc/filebrowser/config.yaml
         ports:
         - containerPort: 80
+          name: http
+        startupProbe:
+          httpGet:
+            port: http
+            path: /filebrowser/health
+          initialDelaySeconds: 10
+          periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            port: http
+            path: /filebrowser/health
+          periodSeconds: 60
+        readinessProbe:
+          httpGet:
+            port: http
+            path: /filebrowser/health
+          periodSeconds: 60
         volumeMounts:
         - name: tmp
           mountPath: /home/filebrowser/tmp
