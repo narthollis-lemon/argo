@@ -21,3 +21,5 @@ configMapGenerator:
 - name: filebrowser
   files:
   - config.yaml=files/config,yaml
+  options:
+    immutable: true

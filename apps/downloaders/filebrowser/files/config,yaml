@@ -2,7 +2,7 @@ server:
   port: 8000
   baseURL: /filebrowser
   database: /home/filebrowser/data/database.db
-  cache: /home/filebrowser/tmp
+  cacheDir: /home/filebrowser/tmp
   sources:
   - path: /media
     config:
