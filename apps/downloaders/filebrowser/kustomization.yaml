@@ -8,6 +8,8 @@ images:
 resources:
 - resources/deployment.yaml
 - resources/data.pvc.yaml
+- resources/service.yaml
+- resources/httproute.yaml
 
 generatorOptions:
   labels:
