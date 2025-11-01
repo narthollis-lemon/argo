@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: freshrss-narthollis-net-tls
+  namespace: freshrss
+spec:
+  issuerRef:
+    name: freshrss-letsencrypt
+  dnsNames:
+  - freshrss.narthollis.net
+  secretName: freshrss-narthollis-net-tls

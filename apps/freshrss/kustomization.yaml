@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+images:
+- name: freshrss/freshrss:latest
+  newTag: 1.27.1
+
+labels:
+- pairs:
+    app.kubernetes.io/name: freshrss
+    app.kubernetes.io/instance: freshrss
+  includeSelectors: true
+  includeTemplates: true
+- pairs:
+    app.kubernetes.io/version: 1.27.1
+  includeSelectors: false
+  includeTemplates: true
+
+resources:
+- resources/gateway.yaml
+- resources/public.certificate.yaml
+- resources/letsencrypt.issuer.yaml
+- resources/deployment.yaml
+- resources/data.pvc.yaml
