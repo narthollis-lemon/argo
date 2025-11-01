@@ -12,8 +12,8 @@ spec:
         app.kubernetes.io/component: server
     spec:
       securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
+        runAsUser: 33
+        runAsGroup: 33
         runAsNonRoot: true
       containers:
       - name: freshrss
