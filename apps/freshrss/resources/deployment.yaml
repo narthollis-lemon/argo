@@ -23,8 +23,6 @@ spec:
           value: /config/data
         - name: EXTENSIONS_PATH
           value: /config/extensions
-        - name: DATA_PATH
-          value: /config/extensions
         - name: LISTEN
           value: '8000'
         - name: CRON_MIN
@@ -51,7 +49,7 @@ spec:
           readOnlyRootFilesystem: true
         volumeMounts:
         - name: data
-          mountPath: /var/www/FreshRSS/data
+          mountPath: /config
           readOnly: false
         resources:
           requests:
