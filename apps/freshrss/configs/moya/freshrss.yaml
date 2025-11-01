@@ -1,0 +1,12 @@
+apiVersion: narthollis.net/v1alpha1
+kind: ArgoApplication
+metadata:
+  namespace: freshrss
+spec:
+  kustomize:
+    labels:
+    - pairs:
+        app.kubernetes.io/name: freshrss
+        app.kubernetes.io/instance: moya-freshrss
+      includeSelectors: true
+      includeTemplates: true

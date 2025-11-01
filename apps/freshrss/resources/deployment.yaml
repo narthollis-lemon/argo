@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freshrss
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: server
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+      containers:
+      - name: freshrss
+        image: freshrss/freshrss:latest
+        env:
+        - name: DATA_PATH
+          value: /config/data
+        - name: EXTENSIONS_PATH
+          value: /config/extensions
+        - name: DATA_PATH
+          value: /config/extensions
+        - name: LISTEN
+          value: '8000'
+        - name: CRON_MIN
+          value: 13,43
+        - name: TRUSTED_PROXY
+          value: '10.244.0.0/16 2403:580d:885c:fe00::/56'
+        - name: FRESHRSS_INSTALL
+          value: |-
+            --api-enabled
+            --base-url https://freshrss.narthollis.net/
+            --default-user admin
+            --language en
+        # - name: FRESHRSS_USER
+        #   value: |-
+        #     --api-password ${ADMIN_API_PASSWORD}
+        #     --email ${ADMIN_EMAIL}
+        #     --language en
+        #     --password ${ADMIN_PASSWORD}
+        #     --user admin
+        ports:
+        - containerPort: 8000
+          name: http
+        securityContext:
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - name: data
+          mountPath: /var/www/FreshRSS/data
+          readOnly: false
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 250m
+          limits:
+            memory: 256Mi
+            cpu: 500m
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: freshrss-data
