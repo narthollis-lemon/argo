@@ -12,48 +12,32 @@ spec:
         app.kubernetes.io/component: server
     spec:
       securityContext:
-        runAsUser: 33
-        runAsGroup: 33
+        runAsUser: 2000
+        runAsGroup: 2000
         runAsNonRoot: true
-        fsGroup: 33
+        fsGroup: 2000
       containers:
       - name: freshrss
-        image: freshrss/freshrss:latest
+        image: ghcr.io/erhardtconsulting/freshrss:latest
         env:
-        - name: DATA_PATH
-          value: /config/data
-        - name: EXTENSIONS_PATH
-          value: /config/extensions
-        - name: LISTEN
-          value: '8000'
         - name: CRON_MIN
           value: 13,43
         - name: TRUSTED_PROXY
           value: '10.244.0.0/16 2403:580d:885c:fe00::/56'
-        - name: FRESHRSS_INSTALL
-          value: |-
-            --api-enabled
-            --base-url https://freshrss.narthollis.net/
-            --default-user admin
-            --language en
-        # - name: FRESHRSS_USER
-        #   value: |-
-        #     --api-password ${ADMIN_API_PASSWORD}
-        #     --email ${ADMIN_EMAIL}
-        #     --language en
-        #     --password ${ADMIN_PASSWORD}
-        #     --user admin
         ports:
-        - containerPort: 8000
+        - containerPort: 8080
           name: http
         securityContext:
-          readOnlyRootFilesystem: false # booooo
+          readOnlyRootFilesystem: true
         volumeMounts:
         - name: data
-          mountPath: /config/data
+          mountPath: /data
           readOnly: false
         - name: extensions
-          mountPath: /config/extensions
+          mountPath: /opt/freshrss/extensions
+          readOnly: false
+        - name: tmp-tmpfs
+          mountPath: /tmp
           readOnly: false
         resources:
           requests:
@@ -69,3 +53,6 @@ spec:
       - name: extensions
         persistentVolumeClaim:
           claimName: freshrss-extensions
+      - name: tmp-tmpfs
+        emptyDir:
+          medium: Memory
