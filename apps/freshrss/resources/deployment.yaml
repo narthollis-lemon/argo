@@ -15,6 +15,7 @@ spec:
         runAsUser: 33
         runAsGroup: 33
         runAsNonRoot: true
+        fsGroup: 33
       containers:
       - name: freshrss
         image: freshrss/freshrss:latest
@@ -46,10 +47,13 @@ spec:
         - containerPort: 8000
           name: http
         securityContext:
-          readOnlyRootFilesystem: true
+          readOnlyRootFilesystem: false # booooo
         volumeMounts:
         - name: data
-          mountPath: /config
+          mountPath: /config/data
+          readOnly: false
+        - name: extensions
+          mountPath: /config/extensions
           readOnly: false
         resources:
           requests:
@@ -62,3 +66,6 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: freshrss-data
+      - name: extensions
+        persistentVolumeClaim:
+          claimName: freshrss-extensions
