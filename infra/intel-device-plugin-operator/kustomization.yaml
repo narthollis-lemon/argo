@@ -3,7 +3,8 @@ kind: Kustomization
 
 resources:
 - https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/operator/default?ref=v0.34.0
-- https://github.com/intel/intel-device-plugins-for-kubernetes/tree/main/deployments/operator/samples?ref=v0.34.0
+- resources/gpu.yaml
+
 patches:
 - target:
     kind: Deployment
