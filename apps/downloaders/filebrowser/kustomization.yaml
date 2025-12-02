@@ -3,7 +3,7 @@ kind: Kustomization
 
 images:
 - name: ghcr.io/gtsteffaniak/filebrowser
-  newTag: 1.1.1-beta
+  newTag: 1.1.3-beta
 
 resources:
 - resources/deployment.yaml
