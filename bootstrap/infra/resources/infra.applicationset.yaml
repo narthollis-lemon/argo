@@ -72,7 +72,7 @@ spec:
         {{- if (hasKey .spec "jsonnet")  }}
         directory:
           jsonnet:
-            {{- .spec.jsonnet | toYaml | indent 6 | printf "\n%s" }}
+            {{- .spec.jsonnet | toYaml | indent 8 | printf "\n%s" }}
         {{- end }}
       {{- if (hasKey .spec "ignoreDifferences") }}
       ignoreDifferences:
