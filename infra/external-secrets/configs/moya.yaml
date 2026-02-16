@@ -3,5 +3,4 @@ kind: ArgoApplication
 metadata:
   namespace: external-secrets
 spec:
-  source:
-    helm: {}
+  helm: {}
