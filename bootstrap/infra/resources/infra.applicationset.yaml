@@ -10,29 +10,29 @@ metadata:
 spec:
   goTemplate: true
   goTemplateOptions:
-    - missingkey=error
+  - missingkey=error
   generators:
-    - matrix:
-        generators:
-          - clusters: {}
-          - git:
-              repoURL: https://github.com/narthollis-lemon/argo.git
-              revision: HEAD
-              files:
-                - path: 'infra/**/configs/{{ .name }}.yaml'
-              values:
-                cluster: '{{ .name }}'
-                server: '{{ .server }}'
-      selector:
-        matchExpressions:
-          - key: apiVersion
-            operator: In
-            values:
-              - narthollis.net/v1alpha1
-          - key: kind
-            operator: In
-            values:
-              - ArgoApplication
+  - matrix:
+      generators:
+      - clusters: {}
+      - git:
+          repoURL: https://github.com/narthollis-lemon/argo.git
+          revision: HEAD
+          files:
+          - path: 'infra/**/configs/{{ .name }}.yaml'
+          values:
+            cluster: '{{ .name }}'
+            server: '{{ .server }}'
+    selector:
+      matchExpressions:
+      - key: apiVersion
+        operator: In
+        values:
+        - narthollis.net/v1alpha1
+      - key: kind
+        operator: In
+        values:
+        - ArgoApplication
   template:
     metadata:
       name: '{{ (printf "%s-%s" .values.cluster (dig "name" (index .path.segments 1) .metadata)) | normalize }}'
@@ -50,8 +50,8 @@ spec:
           selfHeal: true
           allowEmpty: false
         syncOptions:
-          - CreateNamespace=true
-          - ServerSideApply=true
+        - CreateNamespace=true
+        - ServerSideApply=true
         managedNamespaceMetadata:
           labels:
             app.kubernetes.io/managed-by: argocd
@@ -68,6 +68,11 @@ spec:
         {{- if (hasKey .spec "kustomize")  }}
         kustomize:
           {{- .spec.kustomize | toYaml | indent 6 | printf "\n%s" }}
+        {{- end }}
+        {{- if (hasKey .spec "jsonnet")  }}
+        directory:
+          jsonnet:
+            {{- .spec.jsonnet | toYaml | indent 6 | printf "\n%s" }}
         {{- end }}
       {{- if (hasKey .spec "ignoreDifferences") }}
       ignoreDifferences:

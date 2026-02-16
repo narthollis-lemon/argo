@@ -1,0 +1,9 @@
+apiVersion: narthollis.net/v1alpha1
+kind: ArgoApplication
+metadata:
+  namespace: monitoring
+spec:
+  source:
+    jsonnet:
+      libs:
+      - vendor
