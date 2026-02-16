@@ -1,0 +1,35 @@
+kube-prometheus-stack:
+  # Disable the Prometheus Adapter to make room for KEDA
+  prometheusAdapter:
+    enabled: false
+
+  # Basic Prometheus Configuration
+  prometheus:
+    prometheusSpec:
+      # This ensures Prometheus can find ServiceMonitors across all namespaces
+      serviceMonitorSelectorNilUsesHelmValues: false
+      serviceMonitorNamespaceSelector: {}
+
+      # Resources: Adjust based on your cluster size
+      resources:
+        requests:
+          memory: 400Mi
+          cpu: 200m
+        limits:
+          memory: 2Gi
+
+  # Grafana Configuration
+  grafana:
+    enabled: true
+    adminPassword: "prom-operator" # Change this!
+
+  # Optional: Disable things you might not need yet to keep it lightweight
+  alertmanager:
+    enabled: true
+
+  # These are the "helpers" that scrape cluster data
+  kubeStateMetrics:
+    enabled: true
+
+  nodeExporter:
+    enabled: true
