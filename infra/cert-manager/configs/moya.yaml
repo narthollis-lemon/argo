@@ -3,6 +3,4 @@ kind: ArgoApplication
 metadata:
   namespace: cert-manager
 spec:
-  source:
-    kustomize: {}
-  
+  kustomize: {}

@@ -3,5 +3,4 @@ kind: ArgoApplication
 metadata:
   namespace: kube-system
 spec:
-  source:
-    kustomize: {}
+  kustomize: {}

@@ -3,5 +3,4 @@ kind: ArgoApplication
 metadata:
   namespace: default
 spec:
-  source:
-    kustomize: {}
+  kustomize: {}
