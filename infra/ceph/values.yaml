@@ -1,3 +1,7 @@
+rook-ceph:
+  monitoring:
+    enabled: true
+
 rook-ceph-cluster:
   toolbox:
     # Debugging Toolbxox https://rook.io/docs/rook/latest-release/Troubleshooting/ceph-common-issues/#tools-in-the-rook-toolbox
@@ -29,6 +33,15 @@ rook-ceph-cluster:
       useAllDevices: true
       deviceFilter: "^sd."
       volumeClaimTemplates: [] # Use raw block devices (HostPath LVM/device)
+
+    mgr:
+      modules:
+      - name: rook
+        enabled: true
+
+  monitoring:
+    enabled: true
+    createPrometheusRules: true
 
   cephBlockPools:
   # =======================================================
