@@ -5,4 +5,4 @@ metadata:
 spec:
   jsonnet:
     libs:
-    - vendor
+    - argo/infra/prometheus/vendor
