@@ -10,7 +10,6 @@ rook-ceph-cluster:
     dashboard:
       enabled: true
       prometheusEndpoint: http://moya-prometheus-kube-prome-prometheus.monitoring.svc.cluster.local:9090
-      alertmanagerEndpoint: http://moya-prometheus-kube-prome-alertmanager.monitoring.svc.cluster.local:9093
 
     # The option to automatically remove OSDs that are out and are safe to destroy.
     removeOSDsIfOutAndSafeToRemove: true
