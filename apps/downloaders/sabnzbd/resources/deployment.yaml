@@ -68,11 +68,11 @@ spec:
           readOnly: false
         resources:
           requests:
-            memory: 2048Mi
+            memory: 3072Mi
             cpu: 750m
           limits:
-            memory: 2560Mi
-            cpu: 1500m
+            memory: 3584Mi
+            cpu: 2500m
       volumes:
       - name: run
         emptyDir:
