@@ -7,6 +7,15 @@ rook-ceph-cluster:
     # Debugging Toolbxox https://rook.io/docs/rook/latest-release/Troubleshooting/ceph-common-issues/#tools-in-the-rook-toolbox
     enabled: true
   cephClusterSpec:
+    # OSD Resources adjusted during migration - cosndier resetting
+    resources:
+      osd:
+        requests:
+          cpu: "500m"
+          memory: "2Gi"
+        limits:
+          memory: "4Gi"
+  
     dashboard:
       enabled: true
       prometheusEndpoint: http://moya-prometheus-kube-prome-prometheus.monitoring.svc.cluster.local:9090
