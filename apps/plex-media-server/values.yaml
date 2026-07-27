@@ -3,10 +3,10 @@ plex-media-server:
     storageClassName: fast-block
     resources:
       requests:
-        cpu: 2
+        cpu: 1
         memory: 2Gi
       limits:
-        cpu: 2
+        cpu: 1
         memory: 2Gi
         gpu.intel.com/i915: 1
 
