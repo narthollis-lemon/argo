@@ -27,5 +27,11 @@
         "managerFilePatterns": [
             "/\\.application\\.yaml$/"
         ]
-    }
+    },
+    "packageRules": [
+        {
+            "matchPackageNames": ["rook-ceph", "rook-ceph-cluster"],
+            "separateMinorPatch": true
+        }
+    ]
 }
