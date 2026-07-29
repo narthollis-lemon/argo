@@ -9,4 +9,4 @@ resources:
 
 images:
 - name: lscr.io/linuxserver/radarr
-  newTag: 6.0.4
+  newTag: 6.3.0
