@@ -9,5 +9,5 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 6Ti
+      storage: 12Ti
   storageClassName: slow-filesystem
