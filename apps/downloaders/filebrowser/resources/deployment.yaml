@@ -7,6 +7,7 @@ metadata:
     app.kubernetes.io/component: filebrowser
     app.kubernetes.io/part-of: media
 spec:
+  revisionHistoryLimit: 2
   replicas: 1
   strategy:
     type: Recreate

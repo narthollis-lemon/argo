@@ -6,6 +6,7 @@ metadata:
     app.kubernetes.io/name: navidrome
     app.kubernetes.io/instance: moya-navidrome
 spec:
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
       app.kubernetes.io/name: navidrome
