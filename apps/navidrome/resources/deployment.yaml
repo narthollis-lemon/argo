@@ -24,7 +24,7 @@ spec:
         runAsNonRoot: true
       containers:
       - name: navidrome
-        image: lscr.io/linuxserver/navidrome:latest
+        image: deluan/navidrome:latest
         ports:
         - containerPort: 4533
           name: http
@@ -45,12 +45,6 @@ spec:
             path: /ping
           periodSeconds: 60
         env:
-        - name: PUID
-          value: "1000"
-        - name: PGUID
-          value: "1000"
-        - name: TZ
-          value: Australia/Adelaide
         - name: ND_MUSICFOLDER
           value: /media/Music
         - name: ND_DATAFOLDER
