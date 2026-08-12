@@ -8,4 +8,5 @@ spec:
     name: media-letsencrypt
   dnsNames:
   - media.moya.lemon.narthollis.net
+  - profilarr.media.moya.lemon.narthollis.net
   secretName: media-moya-lemon-narthollis-net-tls

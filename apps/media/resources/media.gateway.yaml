@@ -20,3 +20,17 @@ spec:
       - group: ""
         kind: Secret
         name: media-moya-lemon-narthollis-net-tls
+  - protocol: HTTP
+    port: 8000
+    name: profilarr-http-gw
+    hostname: profilarr.media.moya.lemon.narthollis.net
+  - protocol: HTTPS
+    port: 8443
+    name: profilarr-https-gw
+    hostname: profilarr.media.moya.lemon.narthollis.net
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: media-moya-lemon-narthollis-net-tls
