@@ -39,6 +39,10 @@
                 "ghcr.io/dictionarry-hub/profilarr-parser"
             ],
             "groupName": "profilarr"
+        },
+        {
+            "matchPackageNames": ["lscr.io/linuxserver/lidarr"],
+            "allowedVersions": "<8.0.0"
         }
     ]
 }
