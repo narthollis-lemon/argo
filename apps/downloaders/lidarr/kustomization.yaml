@@ -9,4 +9,4 @@ resources:
 
 images:
 - name: lscr.io/linuxserver/lidarr
-  newTag: 2.4.3
+  newTag: 8.1.2135
