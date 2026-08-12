@@ -3,7 +3,7 @@ kind: Kustomization
 
 images:
 - name: deluan/navidrome
-  newTag: 0.55.0
+  newTag: 0.63.2
 
 resources:
 - resources/gateway.yaml
