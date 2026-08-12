@@ -32,6 +32,13 @@
         {
             "matchPackageNames": ["rook-ceph", "rook-ceph-cluster"],
             "separateMinorPatch": true
+        },
+        {
+            "matchPackageNames": [
+                "ghcr.io/dictionarry-hub/profilarr",
+                "ghcr.io/dictionarry-hub/profilarr-parser"
+            ],
+            "groupName": "profilarr"
         }
     ]
 }
