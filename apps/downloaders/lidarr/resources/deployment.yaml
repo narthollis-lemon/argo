@@ -59,6 +59,10 @@ spec:
         volumeMounts:
         - name: run
           mountPath: /run
+          readOnly: false
+        - name: var-run
+          mountPath: /var/run
+          readOnly: false
         - name: config
           mountPath: /config
           readOnly: false
@@ -74,6 +78,9 @@ spec:
             cpu: 1
       volumes:
       - name: run
+        emptyDir:
+          medium: Memory
+      - name: var-run
         emptyDir:
           medium: Memory
       - name: config
