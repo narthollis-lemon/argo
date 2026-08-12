@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: navidrome
+  labels:
+    app.kubernetes.io/name: navidrome
+    app.kubernetes.io/instance: moya-navidrome
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: navidrome
+      app.kubernetes.io/instance: moya-navidrome
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: navidrome
+        app.kubernetes.io/instance: moya-navidrome
+    spec:
+      securityContext:
+        runAsGroup: 1000
+        runAsUser: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+      containers:
+      - name: navidrome
+        image: lscr.io/linuxserver/navidrome:latest
+        ports:
+        - containerPort: 4533
+          name: http
+        startupProbe:
+          httpGet:
+            port: http
+            path: /ping
+          initialDelaySeconds: 10
+          periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            port: http
+            path: /ping
+          periodSeconds: 60
+        readinessProbe:
+          httpGet:
+            port: http
+            path: /ping
+          periodSeconds: 60
+        env:
+        - name: PUID
+          value: "1000"
+        - name: PGUID
+          value: "1000"
+        - name: TZ
+          value: Australia/Adelaide
+        - name: ND_MUSICFOLDER
+          value: /media/Music
+        - name: ND_DATAFOLDER
+          value: /config
+        - name: ND_PORT
+          value: "4533"
+        securityContext:
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - name: run
+          mountPath: /run
+        - name: tmp
+          mountPath: /tmp
+        - name: config
+          mountPath: /config
+          readOnly: false
+        - name: media-library
+          mountPath: /media
+          readOnly: false
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 250m
+          limits:
+            memory: 512Mi
+            cpu: 1
+      volumes:
+      - name: run
+        emptyDir:
+          medium: Memory
+      - name: tmp
+        emptyDir: {}
+      - name: config
+        persistentVolumeClaim:
+          claimName: navidrome-config
+      - name: media-library
+        persistentVolumeClaim:
+          claimName: media-library
