@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: net-narthollis-www
+
+images:
+- name: ghcr.io/narthollis/net_narthollis_www
+  digest: sha256:477956d0500b6b94665a04ff3013695b2caf12d97c9be12c39d80cc8726846ad
+
+resources:
+- resources/gateway.yaml
+- resources/public.certificate.yaml
+- resources/letsencrypt.issuer.yaml
+- resources/deployment.yaml
+- resources/service.yaml
+- resources/httproute.yaml

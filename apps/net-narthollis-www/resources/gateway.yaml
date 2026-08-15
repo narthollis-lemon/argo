@@ -1,0 +1,20 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: net-narthollis-www
+  namespace: SET_BY_ARGO
+spec:
+  gatewayClassName: traefik
+  listeners:
+  - protocol: HTTP
+    port: 8000
+    name: http-gw
+  - protocol: HTTPS
+    port: 8443
+    name: https-gw
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: narthollis-net-tls

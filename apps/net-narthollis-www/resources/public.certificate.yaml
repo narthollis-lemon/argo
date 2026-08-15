@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: narthollis-net-tls
+  namespace: SET_BY_ARGO
+spec:
+  issuerRef:
+    name: net-narthollis-www-letsencrypt
+  dnsNames:
+  - narthollis.net
+  - www.narthollis.net
+  secretName: narthollis-net-tls

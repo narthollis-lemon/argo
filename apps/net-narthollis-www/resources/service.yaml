@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: net-narthollis-www
+  namespace: SET_BY_ARGO
+spec:
+  selector:
+    app.kubernetes.io/name: net-narthollis-www
+  ports:
+  - port: 80
+    targetPort: http
+    name: http
