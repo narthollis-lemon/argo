@@ -1,9 +1,11 @@
 # yaml-language-server: $schema=values.schema.json
 traefik:
+
   ports:
     websecure:
       http3:
         enabled: true
+        advertisedPort: 443
     plex:
       port: 32400
       expose:
@@ -27,11 +29,11 @@ traefik:
   gateway:
     enabled: false
 
-  logs:
-    general:
-      level: TRACE
-    access:
-      enabled: true
+  # logs:
+  #   general:
+  #     level: TRACE
+  #   access:
+  #     enabled: true
 
   service:
     labels:
