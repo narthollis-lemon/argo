@@ -5,7 +5,7 @@ namespace: net-narthollis-www
 
 images:
 - name: ghcr.io/narthollis/net_narthollis_www
-  newTag: main@sha256:eb3db08bec789752c9a9b3d170bebbfe558cb695bff172a41e16b299b4ac3569
+  newTag: main@sha256:2f978e03dfbd714ef97a3140e20a0100117b4f40daf6a2a5d68a73f88e97f8d2
 
 resources:
 - resources/gateway.yaml
