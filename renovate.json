@@ -43,6 +43,10 @@
         {
             "matchPackageNames": ["lscr.io/linuxserver/lidarr"],
             "allowedVersions": "<8.0.0"
+        },
+        {
+            "matchPackageNames": ["ghcr.io/narthollis/net_narthollis_www"],
+            "pinDigests": true
         }
     ]
 }
