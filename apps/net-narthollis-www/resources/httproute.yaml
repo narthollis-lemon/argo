@@ -1,7 +1,7 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: net-narthollis-www
+  name: net-narthollis-apex
   namespace: SET_BY_ARGO
 spec:
   parentRefs:
@@ -11,7 +11,6 @@ spec:
     sectionName: https-gw
   hostnames:
   - narthollis.net
-  - www.narthollis.net
   rules:
   - matches:
     - path:
@@ -23,6 +22,30 @@ spec:
       name: net-narthollis-www
       port: 80
       weight: 1
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: net-narthollis-www-redirect
+  namespace: SET_BY_ARGO
+spec:
+  parentRefs:
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    name: net-narthollis-www
+    sectionName: https-gw
+  hostnames:
+  - www.narthollis.net
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    filters:
+    - type: RequestRedirect
+      requestRedirect:
+        hostname: narthollis.net
+        statusCode: 301
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -40,4 +63,4 @@ spec:
     - type: RequestRedirect
       requestRedirect:
         scheme: https
-        statusCode: 301 # Permanent redirect (or 302/307/308)
+        statusCode: 301
