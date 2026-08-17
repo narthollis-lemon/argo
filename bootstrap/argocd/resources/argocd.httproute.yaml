@@ -13,6 +13,12 @@ spec:
       - path:
           type: PathPrefix
           value: /
+      filters:
+      - type: ResponseHeaderModifier
+        responseHeaderModifier:
+          set:
+          - name: X-Robots-Tag
+            value: "noindex, nofollow"
       backendRefs:
         - group: ""
           kind: Service
