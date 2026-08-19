@@ -9,6 +9,6 @@ resources:
 
 images:
 - name: ghcr.io/dictionarry-hub/profilarr
-  newTag: 2.1.0
+  newTag: 2.2.0
 - name: ghcr.io/dictionarry-hub/profilarr-parser
-  newTag: 2.1.0
+  newTag: 2.2.0
