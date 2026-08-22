@@ -6,6 +6,5 @@ resources:
 - sonarr/
 - radarr/
 - overseerr/
-- filebrowser/
 - profilarr/
 - lidarr/
