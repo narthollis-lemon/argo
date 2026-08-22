@@ -4,3 +4,6 @@ metadata:
   namespace: rook-ceph
 spec:
   helm: {}
+  syncPolicy:
+    automated:
+      enabled: false
