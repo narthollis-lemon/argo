@@ -1,6 +1,6 @@
 dependencies:
 - name: plex-media-server
   repository: https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages
-  version: 1.7.1
-digest: sha256:8d0a5e24109b3510a59c6053eddb90706f76263e5c420d9b9c4db95c0607f67e
-generated: "2026-08-28T13:44:56.132879088Z"
+  version: 1.9.0
+digest: sha256:206f4855a63bcd20147685f4f457c50549f5befb99cda3e478f3eef768f5cc44
+generated: "2026-09-28T23:38:07.703319522Z"
