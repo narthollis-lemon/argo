@@ -47,6 +47,10 @@
         {
             "matchPackageNames": ["ghcr.io/narthollis/net_narthollis_www"],
             "pinDigests": true
+        },
+        {
+            "matchPackageNames": ["plexinc/pms-docker"],
+            "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\.(?<build>\\d+)-(?<compatibility>.*)$"
         }
     ]
 }
