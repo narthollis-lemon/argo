@@ -9,3 +9,11 @@ spec:
   dnsNames:
   - plex.moya.lemon.narthollis.net
   secretName: plex-moya-lemon-narthollis-net-tls
+  keystores:
+    pkcs12:
+      create: true
+      passwordSecretRef:
+        name: plex-moya-lemon-narthollis-net-tls-keystore
+        key: password
+      profile: Modern2023
+      

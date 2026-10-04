@@ -17,15 +17,13 @@ plex-media-server:
   extraVolumeMounts:
   - name: media-library
     mountPath: /media-library/
-  # Do this later via a device plugin
-  # - name: dev-dri
-  #   mountPath: /dev/dri
+  - name: tls
+    mountPath: /run/secrets/tls/
 
   extraVolumes:
   - name: media-library
     persistentVolumeClaim:
       claimName: media-library
-  # - name: dev-dri
-  #   hostPath:
-  #     path: /dev/dri
-  #     type: Directory
+  - name: tls
+    secret:
+      secretName: plex-moya-lemon-narthollis-net-tls
