@@ -1,6 +1,6 @@
 dependencies:
 - name: spegel
   repository: oci://ghcr.io/spegel-org/helm-charts
-  version: 0.7.4
-digest: sha256:4ba5221a58089edc544dcbcfd3418b0c5b2a4b95b236fd11eac3fccfec7ef2a5
-generated: "2026-07-29T08:33:50.779916564Z"
+  version: 0.8.1
+digest: sha256:7dbb02c29390aa46ab3fcb66c9f02d7b8b984368f4cf6f7c5015bdb7a8c0386c
+generated: "2026-10-28T13:11:08.600089779Z"
