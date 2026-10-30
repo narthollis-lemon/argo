@@ -1,6 +1,5 @@
 # yaml-language-server: $schema=values.schema.json
 traefik:
-
   ports:
     websecure:
       http3:
@@ -41,3 +40,29 @@ traefik:
     spec:
       externalTrafficPolicy: Local
       ipFamilyPolicy: RequireDualStack
+
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 250Mi
+    limits:
+      cpu: 250m
+      memory: 250Mi
+
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 4
+    metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 80
+
+
