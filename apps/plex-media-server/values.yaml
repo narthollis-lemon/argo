@@ -7,7 +7,6 @@ plex-media-server:
     storageClassName: fast-block
     resources:
       requests:
-        cpu: 1
         memory: 2Gi
       limits:
         cpu: 1
