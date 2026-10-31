@@ -16,6 +16,14 @@ rook-ceph-cluster:
       enabled: true
       prometheusEndpoint: http://moya-prometheus-kube-prome-prometheus.monitoring.svc.cluster.local:9090
 
+    resources:
+      mon:
+        requests:
+          cpu: 500m
+      osd:
+        requests:
+          cpu: 500m
+
     # The option to automatically remove OSDs that are out and are safe to destroy.
     removeOSDsIfOutAndSafeToRemove: true
 
