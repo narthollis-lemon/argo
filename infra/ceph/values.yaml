@@ -87,14 +87,14 @@ rook-ceph-cluster:
         csi.storage.k8s.io/fstype: ext4
 
   # =======================================================
-  # 2. slow-block (HDD, 2+1 Erasure Coding)
+  # 2a. slow-block-metadata (SSD, Replication 3 for RBD omap)
   # =======================================================
-  - name: slow-block-pool
+  - name: slow-block-metadata
     spec:
-      erasureCoded:
-        dataChunks: 2
-        codingChunks: 1 # K=2, M=1 -> Requires 3 OSDs, 1.5x overhead
-      deviceClass: hdd # Uses the HDD OSDs
+      failureDomain: host
+      replicated:
+        size: 3
+      deviceClass: ssd
     storageClass:
       enabled: true
       name: slow-block
@@ -104,7 +104,8 @@ rook-ceph-cluster:
       volumeBindingMode: "Immediate"
       parameters:
         imageFormat: "2"
-        imageFeatures: layering
+        imageFeatures: layering,object-map,fast-diff,deep-flatten
+        dataPool: slow-block-pool
         csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
         csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
         csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
@@ -114,6 +115,19 @@ rook-ceph-cluster:
         csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
         csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
         csi.storage.k8s.io/fstype: ext4
+
+  # =======================================================
+  # 2b. slow-block (HDD, 2+1 Erasure Coding)
+  # =======================================================
+  - name: slow-block-pool
+    spec:
+      failureDomain: host
+      erasureCoded:
+        dataChunks: 2
+        codingChunks: 1 # K=2, M=1 -> Requires 3 OSDs, 1.5x overhead
+      deviceClass: hdd # Uses the HDD OSDs
+    storageClass:
+      enabled: false
 
   cephFileSystems:
   # =======================================================
