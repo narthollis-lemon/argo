@@ -22,7 +22,7 @@ frigate:
       storageClass: "fast-block"
       accessMode: ReadWriteOnce
       size: 5Gi
-      ephemeralWritableConfigYaml: true
+      ephemeralWritableConfigYaml: false
     media:
       enabled: true
       storageClass: "slow-block"
