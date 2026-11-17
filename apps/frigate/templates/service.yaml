@@ -3,11 +3,14 @@ kind: Service
 metadata:
   name: frigate-lb
   namespace: {{ .Release.Namespace }}
+  labels:
+    bgp: blue
   annotations:
     io.cilium/lb-ipam-ips: "192.168.175.4"
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
+  ipFamilyPolicy: RequireDualStack
   selector:
     app.kubernetes.io/name: frigate
     app.kubernetes.io/instance: {{ .Release.Name }}
