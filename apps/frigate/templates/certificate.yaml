@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cameras-moya-lemon-narthollis-net-tls
+  namespace: {{ .Release.Namespace }}
+spec:
+  issuerRef:
+    name: narthollis-net-dns-01
+    kind: ClusterIssuer
+  dnsNames:
+    - cameras.moya.lemon.narthollis.net
+  secretName: cameras-moya-lemon-narthollis-net-tls

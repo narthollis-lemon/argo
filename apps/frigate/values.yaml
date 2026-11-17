@@ -1,0 +1,78 @@
+frigate:
+  strategyType: Recreate
+  shmSize: 1Gi
+
+  tmpfs:
+    enabled: true
+    sizeLimit: 1Gi
+
+  env:
+    TZ: "Australia/Adelaide"
+
+  envFromSecrets:
+  - frigate-secrets
+
+  persistence:
+    config:
+      enabled: true
+      storageClass: "fast-block"
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      ephemeralWritableConfigYaml: true
+    media:
+      enabled: true
+      storageClass: "slow-block"
+      accessMode: ReadWriteOnce
+      size: 200Gi
+
+  service:
+    type: ClusterIP
+    port: 5000
+
+  extraVolumes:
+  - name: tls-cert
+    secret:
+      secretName: cameras-moya-lemon-narthollis-net-tls
+      items:
+      - key: tls.crt
+        path: fullchain.pem
+      - key: tls.key
+        path: privkey.pem
+
+  extraVolumeMounts:
+  - name: tls-cert
+    mountPath: /etc/letsencrypt/live/frigate
+    readOnly: true
+
+  config: |
+    mqtt:
+      host: "home.lemon.steicke.me" # Replace with your HA Yellow's reserved IP
+      port: 1883
+      user: frigate
+      password: "{FRIGATE_MQTT_PASSWORD}"
+
+    go2rtc:
+      webrtc:
+        candidates:
+          - "192.168.175.4:8555" # Replace with the LoadBalancer IP from step 4
+      # streams:
+      #   front_doorbell:
+      #     - "ffmpeg:http://192.168.1.70/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_CAM_USER}&password={FRIGATE_CAM_PASS}#video=copy#audio=copy#audio=opus"
+      #     - "rtsp://{FRIGATE_CAM_USER}:{FRIGATE_CAM_PASS}@192.168.1.70:554/Preview_01_sub"
+      #   front_doorbell_sub:
+      #     - "ffmpeg:http://192.168.1.70/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_CAM_USER}&password={FRIGATE_CAM_PASS}"
+
+    # Boots cleanly with zero cameras; add via UI wizard or uncomment doorbell block below
+    cameras: {}
+    # cameras:
+    #   front_doorbell:
+    #     ffmpeg:
+    #       inputs:
+    #         - path: rtsp://127.0.0.1:8554/front_doorbell
+    #           roles:
+    #             - record
+    #         - path: rtsp://127.0.0.1:8554/front_doorbell_sub
+    #           roles:
+    #             - detect
+    #     live:
+    #       stream_name: front_doorbell
