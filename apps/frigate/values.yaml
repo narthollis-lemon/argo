@@ -16,6 +16,15 @@ frigate:
   envFromSecrets:
   - frigate-secrets
 
+  resources:
+    requests:
+      cpu: 240m
+      memory: 2Gi
+      gpu.intel.com/i915: 1
+    limits:
+      memory: 4Gi
+      gpu.intel.com/i915: 1
+
   persistence:
     config:
       enabled: true
@@ -63,6 +72,14 @@ frigate:
       streams:
         garage:
           - rtsp://{FRIGATE_CAM_USER}:{FRIGATE_CAM_PASS}@192.168.174.49:554/
+
+    ffmpeg:
+      hwaccel_args: preset-vaapi
+      
+    detectors:
+      ov:
+        type: openvino
+        device: GPU
 
     cameras:
       garage:
