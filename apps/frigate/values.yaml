@@ -75,11 +75,11 @@ frigate:
 
     ffmpeg:
       hwaccel_args: preset-vaapi
-      
+
     detectors:
       ov:
         type: openvino
-        device: GPU
+        device: CPU
 
     cameras:
       garage:
