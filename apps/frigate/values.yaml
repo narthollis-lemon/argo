@@ -79,14 +79,23 @@ frigate:
     detectors:
       ov:
         type: openvino
-        device: CPU
+        device: GPU
+
+    model:
+      path: /openvino-model/ssdlite_mobilenet_v2.xml
+      labelmap_path: /openvino-model/coco_91cl_bkgr.txt
+      width: 300
+      height: 300
+      input_tensor: nhwc
+      input_pixel_format: bgr
 
     cameras:
       garage:
         enabled: true
         ffmpeg:
           inputs:
-            - path: rtsp://{FRIGATE_CAM_USER}:{FRIGATE_CAM_PASS}@192.168.174.49:554/
+            - path: rtsp://127.0.0.1:8554/garage
+              input_args: preset-rtsp-restream
               roles:
                 - detect
                 - record
