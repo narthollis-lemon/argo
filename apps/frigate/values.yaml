@@ -89,6 +89,7 @@ frigate:
             - path: rtsp://{FRIGATE_CAM_USER}:{FRIGATE_CAM_PASS}@192.168.174.49:554/
               roles:
                 - detect
+                - record
         detect:
           width: 1280
           height: 720
